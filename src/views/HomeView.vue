@@ -4,8 +4,8 @@ import BaseContent from '../components/BaseContent.vue'
 
 <template>
   <BaseContent title="Home Page">
-    <h4>Subtitle</h4>
-    <p>
+    <h4 class="text-2xl mb-4 text-green-600">Subtitle</h4>
+    <p class="text-base mb-4 text-gray-950">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui,
       eligendi totam voluptates consequuntur, dolores dolor voluptatem
       maxime perferendis aliquid vitae perspiciatis sit labore a
@@ -18,8 +18,8 @@ import BaseContent from '../components/BaseContent.vue'
       <li>Hello 4</li>
       <li>Hello 5</li>
     </ul>
-    <h5>Sub subtitle</h5>
-    <p>
+    <h5 class="text-xl mb-4 text-green-600">Sub subtitle</h5>
+    <p class="text-base mb-4 text-red-500">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque,
       quaerat eos totam rerum impedit asperiores veniam maiores,
       ipsam sint obcaecati, quam dolorem voluptatibus. Blanditiis
