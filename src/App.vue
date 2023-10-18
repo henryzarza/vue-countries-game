@@ -7,7 +7,9 @@ import BaseFooter from './components/BaseFooter.vue'
 <template>
   <BaseNavbar />
 
-  <RouterView />
+  <main class="py-10 px-4 max-w-full w-[1280px] mx-auto">
+    <RouterView />
+  </main>
 
   <BaseFooter />
 </template>
