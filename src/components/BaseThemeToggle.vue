@@ -1,10 +1,14 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 
 const isDark = ref(false)
 
 onMounted(() => {
   isDark.value = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+})
+
+onUnmounted(() => {
+  localStorage.removeItem('theme')
 })
 
 watch(isDark, () => {
