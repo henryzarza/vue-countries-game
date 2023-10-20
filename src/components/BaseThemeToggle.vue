@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 
 const isDark = ref(false)
 
@@ -15,6 +15,10 @@ watch(isDark, () => {
     document.documentElement.classList.remove('dark')
     localStorage.theme = 'light'
   }
+})
+
+onUnmounted(() => {
+  localStorage.removeItem('theme')
 })
 </script>
 
