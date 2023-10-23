@@ -1,5 +1,5 @@
 <template>
-  <footer class="px-4 pt-7 pb-4 flex bg-zinc-100 dark:bg-slate-800 flex-col gap-6 items-center">
+  <footer class="px-4 pt-7 pb-4 flex bg-zinc-100 dark:bg-slate-700 flex-col gap-6 items-center">
     <p class="text-base text-zinc-950 dark:text-zinc-50 w-[30rem] max-w-full text-center">
       This is a small project to study and improve my knowlegde in VueJS.
       I used a

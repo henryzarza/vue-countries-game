@@ -7,6 +7,10 @@ onMounted(() => {
   isDark.value = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
 })
 
+onUnmounted(() => {
+  localStorage.removeItem('theme')
+})
+
 watch(isDark, () => {
   if (isDark.value) {
     document.documentElement.classList.add('dark')
@@ -15,10 +19,6 @@ watch(isDark, () => {
     document.documentElement.classList.remove('dark')
     localStorage.theme = 'light'
   }
-})
-
-onUnmounted(() => {
-  localStorage.removeItem('theme')
 })
 </script>
 
