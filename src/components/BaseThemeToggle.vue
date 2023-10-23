@@ -31,7 +31,8 @@ watch(isDark, () => {
     v-model="isDark"
   />
   <label
-    class="label cursor-pointer absolute transition-all bg-repeat-x right-0 top-0 h-8 w-16
+    class="
+      label cursor-pointer absolute transition-all bg-repeat-x right-0 top-0 h-8 w-16
       after:rounded-full after:absolute after:h-6 after:w-6 after:transition-all after:left-1
     "
     for="theme"
@@ -40,9 +41,9 @@ watch(isDark, () => {
 
 <style scoped>
 .label {
-  background: linear-gradient(white 50%, transparent 0) 0 0,
-    radial-gradient(circle closest-side, white 53%, transparent 0) 0 0,
-    radial-gradient(circle closest-side, white 50%, transparent 0) 3.5rem 0
+  background: linear-gradient(var(--white) 50%, transparent 0) 0 0,
+    radial-gradient(circle closest-side, var(--white) 53%, transparent 0) 0 0,
+    radial-gradient(circle closest-side, var(--white) 50%, transparent 0) 3.5rem 0
     #ADE1F8;
   background-size: 1rem 2rem;
   border: 0.1rem solid #93C2D5;
@@ -58,8 +59,8 @@ watch(isDark, () => {
 }
 
 .toggle-input:checked + .label {
-  background: radial-gradient(white 15%, transparent 16%),
-    radial-gradient(white 15%, transparent 16%);
+  background: radial-gradient(var(--white) 15%, transparent 16%),
+    radial-gradient(var(--white) 15%, transparent 16%);
   background-color: #3D4145;
   background-position: 0 0, 1.5rem 1.5rem;
   background-size: 2.5rem 2.5rem;
@@ -67,7 +68,7 @@ watch(isDark, () => {
 }
 
 .toggle-input:checked + .label::after {
-  background-color: white;
+  background-color: var(--white);
   border-color: #E4E6CA;
   transform: translateX(1.85rem);
 }
