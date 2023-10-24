@@ -5,6 +5,7 @@ import { useQuery } from '@vue/apollo-composable'
 import type { Country } from '@/types/Home'
 import ListView from '@/components/Home/ListView.vue'
 import MapView from '@/components/Home/MapView.vue'
+import StateUI from '@/components/Home/StateUI.vue'
 
 const COUNTRIES_QUERY = gql`
   query getCountries {
@@ -46,14 +47,10 @@ const { result, loading, error } = useQuery<{ countries: Country[] }>(COUNTRIES_
   </header>
 
   <!-- When is loading -->
-  <div v-if="loading">
-    <h2>Loading...</h2>
-  </div>
+  <StateUI v-if="loading" type="loading" message="Loading..." />
 
   <!-- When there is an error -->
-  <div v-else-if="error">
-    <h3>Error: {{ error.message }}</h3>
-  </div>
+  <StateUI v-if="error" type="image" :message="error.message" />
 
   <!-- When there are data -->
   <template v-else-if="result?.countries && result.countries.length > 0">
@@ -65,9 +62,7 @@ const { result, loading, error } = useQuery<{ countries: Country[] }>(COUNTRIES_
   </template>
 
   <!-- When result is empty -->
-  <div v-else>
-    <h3>No Data</h3>
-  </div>
+  <StateUI v-else type="image" message="Umm... There are no data to show" />
 
 </template>
 
