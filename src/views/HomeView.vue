@@ -22,7 +22,7 @@ const { result, loading, error } = useQuery<{ countries: Country[] }>(COUNTRIES_
 </script>
 
 <template>
-  <header class="flex gap-4 flex-col md:flex-row mb-8 items-center">
+  <header class="flex gap-4 mb-8 items-center">
     <h1 class="text-4xl font-bold text-zinc-950 dark:text-zinc-50 flex-1">Countries</h1>
     <div class="flex border-solid border-[1px] border-zinc-950 rounded-sm overflow-hidden">
       <input class="radio hidden" type="radio" v-model="view" value="map" id="map" />
@@ -33,14 +33,14 @@ const { result, loading, error } = useQuery<{ countries: Country[] }>(COUNTRIES_
           border-solid border-r-[1px] border-r-zinc-950 border-zinc-950
         "
       >
-        <img class="w-6" src="assets/checklist.png" alt="Checklist icon">
+        <img class="w-8" src="assets/continents.png" alt="Continents icon">
       </label>
       <input class="radio hidden" type="radio" v-model="view" value="card" id="card" />
       <label
         for="card"
         class="py-2 px-4 flex items-center bg-zinc-200 cursor-pointer hover:bg-violet-200 transition-all"
       >
-        <img class="w-8" src="assets/continents.png" alt="Continents icon">
+        <img class="w-6" src="assets/checklist.png" alt="Checklist icon">
       </label>
     </div>
   </header>
@@ -58,7 +58,7 @@ const { result, loading, error } = useQuery<{ countries: Country[] }>(COUNTRIES_
   <!-- When there are data -->
   <template v-else-if="result?.countries && result.countries.length > 0">
     <!-- Map view -->
-    <MapView :hidden="view !== 'map'" :countries="result.countries" />
+    <MapView :hidden="view !== 'map'" />
 
     <!-- List view -->
     <ListView v-if="view === 'card'" :countries="result.countries" />
