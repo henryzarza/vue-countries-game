@@ -41,9 +41,9 @@ watch(isDark, () => {
 
 <style scoped>
 .label {
-  background: linear-gradient(var(--white) 50%, transparent 0) 0 0,
-    radial-gradient(circle closest-side, var(--white) 53%, transparent 0) 0 0,
-    radial-gradient(circle closest-side, var(--white) 50%, transparent 0) 3.5rem 0
+  background: linear-gradient(white 50%, transparent 0) 0 0,
+    radial-gradient(circle closest-side, white 53%, transparent 0) 0 0,
+    radial-gradient(circle closest-side, white 50%, transparent 0) 3.5rem 0
     #ADE1F8;
   background-size: 1rem 2rem;
   border: 0.1rem solid #93C2D5;
@@ -59,8 +59,8 @@ watch(isDark, () => {
 }
 
 .toggle-input:checked + .label {
-  background: radial-gradient(var(--white) 15%, transparent 16%),
-    radial-gradient(var(--white) 15%, transparent 16%);
+  background: radial-gradient(white 15%, transparent 16%),
+    radial-gradient(white 15%, transparent 16%);
   background-color: #3D4145;
   background-position: 0 0, 1.5rem 1.5rem;
   background-size: 2.5rem 2.5rem;
@@ -68,7 +68,7 @@ watch(isDark, () => {
 }
 
 .toggle-input:checked + .label::after {
-  background-color: var(--white);
+  background-color: white;
   border-color: #E4E6CA;
   transform: translateX(1.85rem);
 }
