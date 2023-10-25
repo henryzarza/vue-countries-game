@@ -45,7 +45,7 @@ onUnmounted(() => {
     <li
       class="
         flex gap-3 items-center bg-violet-100 rounded-sm border-[1px] border-violet-300 py-2
-        px-3 cursor-pointer hover:bg-violet-300 hover:shadow-lg transition-all hover:scale-105
+        px-3 cursor-pointer hover:bg-violet-300 hover:shadow-lg transition-all hover:scale-[1.02]
         dark:bg-slate-800 dark:border-slate-600 dark:hover:bg-slate-600
       "
       v-for="country in filterCountries"

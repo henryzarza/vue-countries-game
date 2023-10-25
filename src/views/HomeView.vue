@@ -9,7 +9,7 @@ import StateUI from '@/components/Home/StateUI.vue'
 import CountryDetail from '@/components/Home/CountryDetail.vue'
 
 const COUNTRIES_QUERY = gql`
-  query getCountries {
+  query countries {
     countries {
       code
       emoji
