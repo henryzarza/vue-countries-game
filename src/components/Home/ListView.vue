@@ -1,11 +1,41 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, ref, onUnmounted } from 'vue'
 import type { Country } from '@/types/Home'
 
-const { countries } = defineProps<{ countries: Country[] }>()
+const REGISTER_PER_PAGE = 40
 
-// TODO: add lazy loading to replace 50 for dynamic value
-const filterCountries = computed(() => countries.slice(0, 50) ?? [])
+const { countries } = defineProps<{ countries: Country[] }>()
+const lastIndex = ref(REGISTER_PER_PAGE)
+const filterCountries = computed(() => countries.slice(0, lastIndex.value) ?? [])
+const intersectionRef = ref()
+let observer: IntersectionObserver
+
+onMounted(() => {
+  const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        lastIndex.value = lastIndex.value + REGISTER_PER_PAGE > countries.length
+          ? countries.length : lastIndex.value + REGISTER_PER_PAGE
+
+        if (lastIndex.value === countries.length)
+          observer.unobserve(intersectionRef.value)
+      }
+    })
+  }
+  
+  observer = new IntersectionObserver(handleIntersection, {
+    rootMargin: '100px'
+  })
+
+  observer.observe(intersectionRef.value)
+})
+
+onUnmounted(() => {
+  if (observer && intersectionRef.value) {
+    observer.unobserve(intersectionRef.value)
+  }
+})
+
 </script>
 
 <template>
@@ -36,4 +66,7 @@ const filterCountries = computed(() => countries.slice(0, 50) ?? [])
       </h6>
     </li>
   </ul>
+
+  <!-- this element is for infinite scroll functionality with the Intersection Observer API -->
+  <div class="w-full h-6" ref="intersectionRef" />
 </template>
