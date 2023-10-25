@@ -5,6 +5,8 @@ import type { Country } from '@/types/Home'
 const REGISTER_PER_PAGE = 40
 
 const { countries } = defineProps<{ countries: Country[] }>()
+const emit = defineEmits<{'selectCountry': [code: string]}>()
+
 const lastIndex = ref(REGISTER_PER_PAGE)
 const filterCountries = computed(() => countries.slice(0, lastIndex.value) ?? [])
 const intersectionRef = ref()
@@ -43,11 +45,12 @@ onUnmounted(() => {
     <li
       class="
         flex gap-3 items-center bg-violet-100 rounded-sm border-[1px] border-violet-300 py-2
-        px-3 cursor-pointer hover:bg-violet-300 hover:shadow-lg transition-all
+        px-3 cursor-pointer hover:bg-violet-300 hover:shadow-lg transition-all hover:scale-105
         dark:bg-slate-800 dark:border-slate-600 dark:hover:bg-slate-600
       "
       v-for="country in filterCountries"
       :key="country.code"
+      @click="emit('selectCountry', country.code)"
     >
       <span class="text-6xl" :aria-label="country.name + ' flag emoji'">
         {{ country.emoji }}

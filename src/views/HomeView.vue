@@ -6,6 +6,7 @@ import type { Country } from '@/types/Home'
 import ListView from '@/components/Home/ListView.vue'
 import MapView from '@/components/Home/MapView.vue'
 import StateUI from '@/components/Home/StateUI.vue'
+import CountryDetail from '@/components/Home/CountryDetail.vue'
 
 const COUNTRIES_QUERY = gql`
   query getCountries {
@@ -19,7 +20,12 @@ const COUNTRIES_QUERY = gql`
 `
 
 const view = ref('map')
+const selectedCountryCode = ref()
 const { result, loading, error } = useQuery<{ countries: Country[] }>(COUNTRIES_QUERY)
+
+const selectCountry = (code?: string) => {
+  selectedCountryCode.value = code
+}
 </script>
 
 <template>
@@ -55,10 +61,23 @@ const { result, loading, error } = useQuery<{ countries: Country[] }>(COUNTRIES_
   <!-- When there are data -->
   <template v-else-if="result?.countries && result.countries.length > 0">
     <!-- Map view -->
-    <MapView :hidden="view !== 'map'" />
+    <MapView
+      :hidden="view !== 'map'"
+      @selectCountry="selectCountry"
+    />
 
     <!-- List view -->
-    <ListView v-if="view === 'card'" :countries="result.countries" />
+    <ListView
+      v-if="view === 'card'"
+      :countries="result.countries"
+      @selectCountry="selectCountry"
+    />
+
+    <!-- Modal to show the country detail -->
+    <CountryDetail
+      :code="selectedCountryCode"
+      @closeModal="selectCountry"
+    />
   </template>
 
   <!-- When result is empty -->
