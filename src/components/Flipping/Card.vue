@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import type { Country } from '@/types/Home'
 import IconIdea from './IconIdea.vue'
 
-const { emoji, isPicked, isGuessed } = defineProps<{
-  emoji: string,
+const { data, isPicked, isGuessed } = defineProps<{
+  data: Omit<Country, 'capital'>,
   isPicked?: boolean,
   isGuessed?: boolean,
 }>()
@@ -19,6 +20,7 @@ const { emoji, isPicked, isGuessed } = defineProps<{
       'picked': isPicked,
       'guessed pointer-events-none': isGuessed
     }"
+    @click="() => console.log(data.code)"
   >
     <!-- Card front -->
     <div
@@ -29,10 +31,10 @@ const { emoji, isPicked, isGuessed } = defineProps<{
       }"
     >
       <h6 class="text-8xl leading-[0.9]">
-        {{emoji}}
+        {{data.emoji}}
       </h6>
       <span class="text-sm font-semibold text-zinc-950 dark:text-zinc-50">
-        Country Name
+        {{data.name}}
       </span>
     </div>
 
