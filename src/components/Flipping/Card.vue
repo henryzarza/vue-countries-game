@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import type { Country } from '@/types/Home'
+import type { Country } from '@/types/Game'
 import IconIdea from './IconIdea.vue'
 
-const { data, isPicked, isGuessed } = defineProps<{
-  data: Omit<Country, 'capital'>,
-  isPicked?: boolean,
-  isGuessed?: boolean,
+const { data, index, isGuessed, isPicked } = defineProps<{
+  data: Country,
+  index: number,
+  isGuessed?: boolean
+  isPicked?: boolean
 }>()
+const emit = defineEmits<{'selectCountry': [index: number]}>()
 </script>
 
 <template>
@@ -17,10 +19,10 @@ const { data, isPicked, isGuessed } = defineProps<{
       cursor-pointer duration-500 ease-in-out card bg-violet-200 dark:bg-teal-900
     "
     :class="{
-      'picked': isPicked,
+      'picked pointer-events-none': isPicked,
       'guessed pointer-events-none': isGuessed
     }"
-    @click="() => console.log(data.code)"
+    @click="emit('selectCountry', index)"
   >
     <!-- Card front -->
     <div
