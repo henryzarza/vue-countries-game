@@ -10,6 +10,7 @@ import {
 import am5geodata_worldLow from '@amcharts/amcharts5-geodata/worldLow'
 import am5themes_Animated from '@amcharts/amcharts5/themes/Animated'
 
+const emit = defineEmits<{'selectCountry': [code: string]}>()
 const mapRef = ref();
 let am5Root: Root;
 
@@ -47,10 +48,11 @@ onMounted(() => {
       if (previousPolygon && previousPolygon != target)
         previousPolygon.set('active', false)
       if (target?.get('active')) {
+        const { dataItem } = target
         // @ts-ignore: issue of the amChart library
-        polygonSeries.zoomToDataItem(target.dataItem)
-        if (target.dataItem?.dataContext)
-          console.log('ID --- ', target.dataItem.dataContext)
+        polygonSeries.zoomToDataItem(dataItem)
+        if (dataItem?.dataContext && typeof dataItem.dataContext === 'object' && 'id' in dataItem.dataContext)
+          emit('selectCountry', String(dataItem.dataContext.id))
       } else
         chart.goHome()
       previousPolygon = target
@@ -68,6 +70,6 @@ onUnmounted(() => {
 <template>
   <div
     ref="mapRef"
-    class="w-full h-[45rem] border-solid border-2 border-violet-500 dark:border-teal-500 rounded"
+    class="w-full h-[45rem] border-solid border-2 border-slate-300 dark:border-slate-50 rounded"
   />
 </template>
