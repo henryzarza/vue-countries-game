@@ -8,9 +8,9 @@ const { nameId, options, type, label } = defineProps<{
 </script>
 
 <template>
-  <label class="text-sm font-medium mb-1 text-zinc-950 dark:text-zinc-50" :for="nameId">
+  <span class="text-sm font-medium mb-1 text-zinc-950 dark:text-zinc-50" :for="nameId">
     {{ label }}
-  </label>
+  </span>
   <div class="flex flex-wrap gap-3">
     <div class="flex gap-1" v-for="option in options" :key="option.id">
       <input class="custom-input hidden" :type="type" :name="nameId" :id="`${nameId}-${option.id}`" :value="option.id">

@@ -1,9 +1,10 @@
 <script setup lang="ts">
-const { nameId, type = "text", label, placeholder } = defineProps<{
+const { nameId, type, label, placeholder, autocomplete } = defineProps<{
   nameId: string,
   type?: HTMLInputElement['type'],
   label: string,
-  placeholder?: string
+  placeholder?: string,
+  autocomplete?: string
 }>()
 </script>
 
@@ -15,7 +16,7 @@ const { nameId, type = "text", label, placeholder } = defineProps<{
     {{label}}
   </label>
   <input
-    :type="type"
+    :type="type || 'text'"
     :id="nameId"
     :placeholder="placeholder"
     class="
@@ -24,5 +25,6 @@ const { nameId, type = "text", label, placeholder } = defineProps<{
       focus:ring-violet-600 dark:focus:ring-emerald-600 bg-zinc-50 dark:bg-zinc-800
       dark:placeholder:text-zinc-500 dark:ring-zinc-700 outline-none
     "
+    :autocomplete="autocomplete"
   >
 </template>
