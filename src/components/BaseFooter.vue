@@ -13,12 +13,20 @@
       </a> made by Trevor Blades. <br>
       During my learning proccess I created
       <a
+        href="https://github.com/henryzarza/vue-training-app"
+        target="_blank"
+        rel="external"
+        class="underline text-violet-800 dark:text-emerald-500 font-semibold transition-colors hover:text-violet-500 dark:hover:text-emerald-200"
+      >
+        this repo
+      </a> and
+      <a
         href="https://mirror-maiasaura-9b2.notion.site/VueJS-notes-4d45dcff78bc4a87bbe4a2acd9030cf8"
         target="_blank"
         rel="external"
         class="underline text-violet-800 dark:text-emerald-500 font-semibold transition-colors hover:text-violet-500 dark:hover:text-emerald-200"
       >
-        these notes
+        this Notion
       </a>
       that I would like to share with you <span role="img" aria-label="smiley face">🙂</span>.
     </p>
