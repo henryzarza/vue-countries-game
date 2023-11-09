@@ -1,19 +1,36 @@
 <script setup lang="ts">
-const { nameId, options, type, label } = defineProps<{
+const {
+  nameId,
+  options,
+  type,
+  label,
+  isRequired,
+} = defineProps<{
   nameId: string,
   options: { id: string, name: string }[],
   type: 'radio' | 'checkbox',
   label: string,
+  isRequired?: boolean,
+}>()
+defineEmits<{
+  'updateValue': [value: string]
 }>()
 </script>
 
 <template>
   <span class="text-sm font-medium mb-1 text-zinc-950 dark:text-zinc-50" :for="nameId">
-    {{ label }}
+    {{label}} {{ isRequired ? ' *' : '' }}
   </span>
   <div class="flex flex-wrap gap-3">
     <div class="flex gap-1" v-for="option in options" :key="option.id">
-      <input class="custom-input hidden" :type="type" :name="nameId" :id="`${nameId}-${option.id}`" :value="option.id">
+      <input
+        class="custom-input hidden"
+        :type="type"
+        :name="nameId"
+        :id="`${nameId}-${option.id}`"
+        :value="option.id"
+        @change="$emit('updateValue', ($event.target as HTMLInputElement).value)"
+      >
       <label
         :for="`${nameId}-${option.id}`"
         class="
@@ -27,6 +44,7 @@ const { nameId, options, type, label } = defineProps<{
       </label>
     </div>
   </div>
+  <slot />
 </template>
 
 <style scoped>
