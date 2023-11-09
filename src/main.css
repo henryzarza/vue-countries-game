@@ -25,3 +25,16 @@
     font-style: normal;
   }
 }
+
+.shake {
+  animation: shake 80ms ease-in 5 alternate;
+}
+
+@keyframes shake {
+  from {
+    transform: translateX(-0.5rem);
+  }
+  to {
+    transform: translateX(0.5rem);
+  }
+}

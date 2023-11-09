@@ -169,7 +169,7 @@ const playAgain = () => {
     <!-- Status message -->
     <h6
       v-if="quantityMisplaced > 0"
-      class="mb-4 text-center text-lg font-semibold text-violet-900 dark:text-emerald-200 message"
+      class="mb-4 text-center text-lg font-semibold text-violet-900 dark:text-emerald-200 shake"
     >
       {{ quantityMisplaced === 1 ? `There is ${quantityMisplaced} country that is poorly` : `There are ${quantityMisplaced} countries that are poorly` }} positioned. Try again 💪
     </h6>
@@ -216,18 +216,3 @@ const playAgain = () => {
   <!-- When result is empty -->
   <StateUI v-else type="image" message="Umm... There are no data to show" />
 </template>
-
-<style scoped>
-.message {
-  animation: shake 80ms ease-in 5 alternate;
-}
-
-@keyframes shake {
-  from {
-    transform: translateX(-0.5rem);
-  }
-  to {
-    transform: translateX(0.5rem);
-  }
-}
-</style>
