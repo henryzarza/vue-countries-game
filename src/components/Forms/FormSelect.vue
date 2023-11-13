@@ -39,10 +39,10 @@ defineEmits<{
       focus:ring-violet-600 dark:focus:ring-emerald-600 bg-zinc-50 dark:bg-zinc-800
       dark:placeholder:text-zinc-500 outline-none
     "
-    :class="{
-      'ring-red-500 dark:ring-red-600 shake': hasError,
-      'ring-zinc-300 dark:ring-zinc-700': !hasError
-    }"
+    :class="hasError ?
+      'ring-red-500 dark:ring-red-600 shake' :
+      'ring-zinc-300 dark:ring-zinc-700'
+    "
   >
     <option v-if="placeholder" value="">{{ placeholder }}</option>
     <option v-for="option in options" :key="option.id" :value="option.id">
