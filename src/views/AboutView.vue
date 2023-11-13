@@ -1,19 +1,38 @@
 <script setup lang="ts">
+import gql from 'graphql-tag'
+import { useQuery } from '@vue/apollo-composable'
+import { computed } from 'vue'
+
 import FormInput from '@/components/Forms/FormInput.vue'
 import FormRadioCheckbox from '@/components/Forms/FormRadioCheckbox.vue'
 import FormSelect from '@/components/Forms/FormSelect.vue'
 import FormTextarea from '@/components/Forms/FormTextarea.vue'
+import type { Country } from '@/types/Home'
 
-// TODO: replace this with backend integration
-const MOCK_COUNTRIES = [
-  { id: 'AR', name: '🇦🇷 Argentina' },
-  { id: 'CO', name: '🇨🇴 Colombia' },
-  { id: 'CH', name: '🇨🇱 Chile' },
-  { id: 'PE', name: '🇵🇪 Peru' },
-  { id: 'PA', name: '🇵🇾 Paraguay' },
-]
-// TODO: replace this with backend integration
-const MOCK_RADIO_DATA = [
+const SA_COUNTRIES_QUERY = gql`
+  query aboutSACountries {
+    continents(filter: { code: { eq: "SA" } }) {
+      countries {
+        code
+        emoji
+        name
+      }
+    }
+  }
+`
+
+const { result } = useQuery<{ continents: { countries: Omit<Country, 'capital'>[] }[] }>(SA_COUNTRIES_QUERY)
+
+const filterCountries = computed(
+  () => {
+    if (result.value?.continents && result.value.continents.length > 0) {
+      return result.value.continents[0].countries.map(({ code, name, emoji }) => ({ id: code, name: `${emoji} ${name}` }))
+    }
+
+    return []
+  })
+
+const CUISINE_COUNTRIES = [
   { id: 'AR', name: '🇦🇷 Argentinian' },
   { id: 'CO', name: '🇨🇴 Colombian' },
   { id: 'MX', name: '🇲🇽 Mexican' },
@@ -40,7 +59,7 @@ const onSubmit = () => {
       <FormInput label="Full Name" nameId="fullName" placeholder="Jane Doe" />
     </div>
     <div class="flex flex-col">
-      <FormInput label="Email" nameId="email" placeholder="jane_doe@example.io" />
+      <FormInput label="Email" nameId="email" placeholder="jane_doe@example.io" autocomplete="email" />
     </div>
     <div class="flex flex-col sm:flex-row gap-4">
       <div class="flex flex-col">
@@ -55,7 +74,7 @@ const onSubmit = () => {
         label="Favorite South America Country"
         nameId="favoriteCountry"
         placeholder="Which country..."
-        :options="MOCK_COUNTRIES"
+        :options="filterCountries"
       />
     </div>
     <div class="flex flex-col">
@@ -63,7 +82,7 @@ const onSubmit = () => {
         label="Least favorite South America Country"
         nameId="leastFavoriteCountry"
         placeholder="Which country..."
-        :options="MOCK_COUNTRIES"
+        :options="filterCountries"
       />
     </div>
     <div class="flex flex-col">
@@ -71,7 +90,7 @@ const onSubmit = () => {
         label="What is your favorite cuisine?"
         nameId="favoriteFood"
         type="radio"
-        :options="MOCK_RADIO_DATA"
+        :options="CUISINE_COUNTRIES"
       />
     </div>
     <div class="flex flex-col">
@@ -79,7 +98,7 @@ const onSubmit = () => {
         label="Which countries are Andean?"
         nameId="andeanCountries"
         type="checkbox"
-        :options="MOCK_COUNTRIES"
+        :options="filterCountries"
       />
     </div>
     <div class="flex flex-col">
