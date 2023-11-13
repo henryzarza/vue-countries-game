@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Card from '@/components/Flipping/Card.vue'
 import gql from 'graphql-tag'
 import { useQuery } from '@vue/apollo-composable'
-import type { Country } from '@/types/Game'
+
+import FlipCard from '@/components/Flipping/FlipCard.vue'
 import StateUI from '@/components/StateUI.vue'
 import GameResult from '@/components/Flipping/GameResult.vue'
+import type { Country } from '@/types/Game'
 import { createArrayToPlay } from '@/utils'
 import { MAX_MOVEMENTS, TIME_TO_TURN_OVER } from '@/constants'
 import { COUNTRIES_TO_PLAY } from '@/constants'
@@ -40,7 +41,7 @@ let indexesGuessed = Array(COUNTRIES_TO_PLAY * 2).fill(false)
 const selectCountry = (index: number) => {
   if (quantityMovements.value > 0 && !isPlaying.value) {
     isPlaying.value = true
-    if (indexPicked.value) {
+    if (indexPicked.value !== undefined) {
       if (shuffleCountries.value[indexPicked.value].code === shuffleCountries.value[index].code) {
         indexesGuessed[indexPicked.value] = true
         indexesGuessed[index] = true
@@ -63,12 +64,18 @@ const selectCountry = (index: number) => {
 }
 
 const resetGame = () => {
+  loading.value = true
   quantityMovements.value = MAX_MOVEMENTS
   indexPicked.value = undefined
   secondIndexPicked.value = undefined
   indexesGuessed = Array(COUNTRIES_TO_PLAY * 2).fill(false)
   shuffleCountries.value = createArrayToPlay(result.value?.countries || [])
   isPlaying.value = false
+
+  // to avoid Vue not remounting cards components issue
+  setTimeout(() => {
+    loading.value = false
+  }, 100)
 }
 // end game logic
 
@@ -98,7 +105,7 @@ const resetGame = () => {
       Movements: <span class="text-4xl font-semibold ml-3">{{quantityMovements}}</span>
     </h6>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-4">
-      <Card
+      <FlipCard
         v-for="(country, index) in shuffleCountries"
         :key="country.code"
         :data="country"

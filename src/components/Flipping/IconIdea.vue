@@ -1,5 +1,3 @@
-
-import type { Script } from 'vm';
 <script setup lang="ts">
 const { lineClass } = defineProps<{ lineClass: string }>()
 </script>

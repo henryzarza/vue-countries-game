@@ -1,5 +1,5 @@
-import { COUNTRIES_TO_PLAY } from "./constants"
-import type { Country } from "./types/Game"
+import { COUNTRIES_TO_PLAY } from './constants'
+import type { Country } from './types/Game'
 
 export function randomIntFromInterval(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min)
