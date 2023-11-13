@@ -30,11 +30,12 @@ const ROUTES = [
           v-for="route in ROUTES"
           :key="route.route"
           class="
-            text-base dark:text-zinc-50 py-2 px-3 rounded-sm transition-all
-            hover:bg-violet-800 hover:font-medium hover:text-zinc-50 dark:hover:bg-emerald-500
+            text-base dark:text-zinc-50 py-2 px-3 transition-all
+            hover:font-semibold dark:hover:border-b-emerald-500 dark:hover:text-emerald-500
+            hover:border-b-violet-800 hover:border-b-2 hover:text-violet-800
           "
           :to="route.route"
-          active-class="bg-violet-800 dark:bg-emerald-500 font-medium text-zinc-50"
+          active-class="border-b-2 border-b-violet-800 dark:border-b-emerald-500 font-semibold text-violet-800 dark:text-emerald-500"
         >
           {{route.name}}
         </RouterLink>
