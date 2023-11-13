@@ -3,14 +3,14 @@ import { ref } from 'vue'
 import gql from 'graphql-tag'
 import { useQuery } from '@vue/apollo-composable'
 
-import Card from '@/components/Continents/Card.vue'
+import ContinentCard from '@/components/Continents/ContinentCard.vue'
 import type { Continent } from '@/types/Game'
 import StateUI from '@/components/StateUI.vue'
 import { type Country, CONTINENTS_CODES } from '@/types/Game'
 import { shuffleArray } from '@/utils'
 import { COUNTRIES_TO_DRAG } from '@/constants'
 
-const CONTINENTS_QUERY = gql`
+const GAME_DATA_QUERY = gql`
   query continentsGameData {
     continents {
       code
@@ -29,12 +29,12 @@ const CONTINENTS_QUERY = gql`
 const { result, loading, error, onResult } = useQuery<{
     continents: Continent[],
     countries: Country[]
-  }>(CONTINENTS_QUERY)
+  }>(GAME_DATA_QUERY)
 
 const isHard = ref(true)
 const hasWon = ref(false)
 const quantityMisplaced = ref(0)
-const dropInteraction = ref<{ [T in CONTINENTS_CODES | 'ALL']: Country[] }>({
+const dropInteractionArrays = ref<{ [T in CONTINENTS_CODES | 'ALL']: Country[] }>({
   [CONTINENTS_CODES.AF]: [],
   [CONTINENTS_CODES.AN]: [],
   [CONTINENTS_CODES.AS]: [],
@@ -47,7 +47,7 @@ const dropInteraction = ref<{ [T in CONTINENTS_CODES | 'ALL']: Country[] }>({
 
 onResult(({ data }) => {
   if (data?.countries) {
-    dropInteraction.value.ALL = shuffleArray(data.countries).slice(0, COUNTRIES_TO_DRAG)
+    dropInteractionArrays.value.ALL = shuffleArray(data.countries).slice(0, COUNTRIES_TO_DRAG)
   }
 })
 
@@ -57,35 +57,35 @@ const startDrag = (event: DragEvent, data: { country: Country, continentCode: CO
     event.dataTransfer.dropEffect = 'move'
     event.dataTransfer.effectAllowed = 'move'
     event.dataTransfer.setData('country', JSON.stringify(data.country))
-    event.dataTransfer.setData('entryCode', data.continentCode)
+    event.dataTransfer.setData('previousCode', data.continentCode)
   }
 }
 
-const onDrop = (event: DragEvent, continent: CONTINENTS_CODES) => {
+const onDrop = (event: DragEvent, entryCode: CONTINENTS_CODES) => {
   if (event.dataTransfer) {
     const country = JSON.parse(event.dataTransfer.getData('country')) as Country
-    const entryCode = event.dataTransfer.getData('entryCode') as CONTINENTS_CODES
+    const previousCode = event.dataTransfer.getData('previousCode') as CONTINENTS_CODES
   
     if (country) {
-      dropInteraction.value[entryCode] = dropInteraction.value[entryCode].filter(el => el.code !== country.code)
-      dropInteraction.value[continent].push(country)
+      dropInteractionArrays.value[previousCode] = dropInteractionArrays.value[previousCode].filter(el => el.code !== country.code)
+      dropInteractionArrays.value[entryCode].push(country)
     }
   }
 }
 
 const validateCountries = () => {
-  let counter = 0
-  for (const key in dropInteraction.value) {
+  let counterMisplaced = 0
+  for (const key in dropInteractionArrays.value) {
     if (key !== 'ALL') {
-      dropInteraction.value[key as CONTINENTS_CODES].forEach(el => {
-        if (el.continent?.code !== key) {
-          counter++
+      dropInteractionArrays.value[key as CONTINENTS_CODES].forEach(({ continent }) => {
+        if (continent?.code !== key) {
+          counterMisplaced++
         }
       })
     }
   }
-  quantityMisplaced.value = counter
-  if (counter === 0) {
+  quantityMisplaced.value = counterMisplaced
+  if (counterMisplaced === 0) {
     hasWon.value = true
   }
 }
@@ -94,7 +94,7 @@ const playAgain = () => {
   if (result.value?.countries) {
     hasWon.value = false
     quantityMisplaced.value = 0
-    dropInteraction.value = {
+    dropInteractionArrays.value = {
       [CONTINENTS_CODES.AF]: [],
       [CONTINENTS_CODES.AN]: [],
       [CONTINENTS_CODES.AS]: [],
@@ -131,7 +131,7 @@ const playAgain = () => {
   <!-- When there are data -->
   <template v-else-if="result?.continents">
     <!-- Interactions buttons -->
-    <div class="flex justify-center mb-6 gap-6 flex-col sm:flex-row">
+    <header class="flex justify-center mb-6 gap-6 flex-col sm:flex-row">
       <div class="flex items-center">
         <input class="w-5 h-5" v-model="isHard" type="checkbox" name="toggleHard" id="toggleHard">
         <label
@@ -144,7 +144,7 @@ const playAgain = () => {
       <button
         class="
           text-base text-zinc-50 py-2 px-3 rounded-sm transition-colors
-          bg-emerald-600 font-medium dark:bg-violet-800
+          bg-emerald-600 font-medium dark:bg-violet-800 cursor-pointer
           hover:bg-emerald-800 dark:hover:bg-violet-600
         "
         @click="playAgain"
@@ -155,16 +155,16 @@ const playAgain = () => {
       <button
         v-else
         class="
-          text-base text-zinc-50 py-2 px-3 rounded-sm transition-colors
+          text-base text-zinc-50 py-2 px-3 rounded-sm transition-colors cursor-pointer
           bg-violet-800 font-medium hover:text-zinc-50 dark:bg-emerald-600
           hover:bg-violet-600 dark:hover:bg-emerald-400 disabled:opacity-80 disabled:cursor-not-allowed
         "
         @click="validateCountries"
-        :disabled="dropInteraction.ALL.length > 0"
+        :disabled="dropInteractionArrays.ALL.length > 0"
       >
         Let's Check 🤞
       </button>
-    </div>
+    </header>
 
     <!-- Status message -->
     <h6
@@ -174,7 +174,7 @@ const playAgain = () => {
       {{ quantityMisplaced === 1 ? `There is ${quantityMisplaced} country that is poorly` : `There are ${quantityMisplaced} countries that are poorly` }} positioned. Try again 💪
     </h6>
     
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
       <div
         v-for="(continent, i) in result.continents"
         :key="continent.code"
@@ -190,27 +190,27 @@ const playAgain = () => {
         <h6 class="text-lg absolute top-1 left-3 font-bold text-zinc-700 dark:text-zinc-50">
           {{continent.name}} ({{ continent.code }})
         </h6>
-        <Card
-          v-for="country in dropInteraction[continent.code]"
+        <ContinentCard
+          v-for="country in dropInteractionArrays[continent.code]"
           :key="country.code"
           :data="country"
-          :show-name="!isHard"
-          :continent-code="continent.code"
-          @start-drag="startDrag"
+          :showName="!isHard"
+          :continentCode="continent.code"
+          @startDrag="startDrag"
         />
       </div>
 
       <div class="flex flex-wrap col-start-2 col-end-4 gap-3 my-4 items-start">
-        <Card
-          v-for="country in dropInteraction.ALL"
+        <ContinentCard
+          v-for="country in dropInteractionArrays.ALL"
           :key="country.code"
           :data="country"
-          :show-name="!isHard"
-          continent-code="ALL"
-          @start-drag="startDrag"
+          :showName="!isHard"
+          continentCode="ALL"
+          @startDrag="startDrag"
         />
       </div>
-    </div>
+    </section>
   </template>
 
   <!-- When result is empty -->

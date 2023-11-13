@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import gql from 'graphql-tag'
 import { useQuery } from '@vue/apollo-composable'
+
 import type { Country } from '@/types/Home'
 import ListView from '@/components/Home/ListView.vue'
 import MapView from '@/components/Home/MapView.vue'
