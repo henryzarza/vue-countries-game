@@ -5,7 +5,7 @@ import { useQuery } from '@vue/apollo-composable'
 import type { Country } from '@/types/Home'
 import ListView from '@/components/Home/ListView.vue'
 import MapView from '@/components/Home/MapView.vue'
-import StateUI from '@/components/Home/StateUI.vue'
+import StateUI from '@/components/StateUI.vue'
 import CountryDetail from '@/components/Home/CountryDetail.vue'
 
 const COUNTRIES_QUERY = gql`
@@ -56,7 +56,7 @@ const selectCountry = (code?: string) => {
   <StateUI v-if="loading" type="loading" message="Loading..." />
 
   <!-- When there is an error -->
-  <StateUI v-if="error" type="image" :message="error.message" />
+  <StateUI v-else-if="error" type="image" :message="error.message" />
 
   <!-- When there are data -->
   <template v-else-if="result?.countries && result.countries.length > 0">

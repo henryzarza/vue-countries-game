@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BaseLoader from '../BaseLoader.vue'
+import BaseLoader from './BaseLoader.vue'
 
 const { type, message } = defineProps<{
   type: 'image' | 'loading',
