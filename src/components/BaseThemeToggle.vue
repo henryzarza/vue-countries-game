@@ -36,6 +36,7 @@ watch(isDark, () => {
       after:rounded-full after:absolute after:h-6 after:w-6 after:transition-all after:left-1
     "
     for="theme"
+    :aria-label="isDark ? 'Dark theme on' : 'Light theme on'"
   />
 </template>
 
