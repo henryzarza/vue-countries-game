@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, vi } from 'vitest'
-
 import { mount, shallowMount } from '@vue/test-utils'
+
 import BaseFooter from '../BaseFooter.vue'
 import BaseLoader from '../BaseLoader.vue'
 import BaseNavbar from '../BaseNavbar.vue'

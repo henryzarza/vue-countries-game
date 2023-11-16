@@ -7,6 +7,9 @@ import {
   maxValue
 } from '@vuelidate/validators'
 
+// quantity of countries to show in Home page with the Intersection observer
+export const REGISTER_PER_PAGE = 40
+
 // quantity of countries to play in the flipping game
 export const COUNTRIES_TO_PLAY = 12
 
@@ -19,6 +22,7 @@ export const TIME_TO_TURN_OVER = 1500
 // quantity of countries to play with in Continents game
 export const COUNTRIES_TO_DRAG = 27
 
+// TODO: move this to About file
 // About page form configs
 export const aboutFormFields = {
   fullName: '',
@@ -33,6 +37,7 @@ export const aboutFormFields = {
   randomContent: ''
 }
 
+// TODO: move this to About file
 export const aboutFormRules = {
   fullName: {
     required: helpers.withMessage('This field is required', required),
