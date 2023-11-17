@@ -47,7 +47,8 @@ const dropInteractionArrays = ref<{ [T in CONTINENTS_CODES | 'ALL']: Country[] }
 
 onResult(({ data }) => {
   if (data?.countries) {
-    dropInteractionArrays.value.ALL = shuffleArray(data.countries).slice(0, COUNTRIES_TO_DRAG)
+    const { length } = data.countries
+    dropInteractionArrays.value.ALL = shuffleArray(data.countries).slice(0, length > COUNTRIES_TO_DRAG ? COUNTRIES_TO_DRAG : length)
   }
 })
 
@@ -94,6 +95,7 @@ const playAgain = () => {
   if (result.value?.countries) {
     hasWon.value = false
     quantityMisplaced.value = 0
+    const { length } = result.value.countries
     dropInteractionArrays.value = {
       [CONTINENTS_CODES.AF]: [],
       [CONTINENTS_CODES.AN]: [],
@@ -102,7 +104,7 @@ const playAgain = () => {
       [CONTINENTS_CODES.NA]: [],
       [CONTINENTS_CODES.OC]: [],
       [CONTINENTS_CODES.SA]: [],
-      'ALL': shuffleArray(result.value.countries).slice(0, COUNTRIES_TO_DRAG)
+      'ALL': shuffleArray(result.value.countries).slice(0, length > COUNTRIES_TO_DRAG ? COUNTRIES_TO_DRAG : length)
     }
   }
 }
