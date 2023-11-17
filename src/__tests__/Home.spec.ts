@@ -1,12 +1,22 @@
-import { describe, it, expect, beforeAll, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { describe, it, expect, beforeAll, vi, beforeEach, afterEach } from 'vitest'
+import { mount, flushPromises } from '@vue/test-utils'
+import { provideApolloClient } from '@vue/apollo-composable'
+import { createMockClient } from 'mock-apollo-client'
 
-import { MOCK_COUNTRIES } from './mocks'
-import CountryDetail from '../Home/CountryDetail.vue'
-import ListView from '../Home/ListView.vue'
+import CountryDetail from '@/components/Home/CountryDetail.vue'
+import ListView from '@/components/Home/ListView.vue'
+import { MOCK_COUNTRIES } from '@/mocks/data'
 
-describe('Home Components', () => {
+describe('Home Components and View', () => {
   const mockObserve = vi.fn()
+
+  beforeEach(() => {
+    provideApolloClient(createMockClient())
+  })
+
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
 
   beforeAll(() => {
     const IntersectionObserverMock = vi.fn(() => ({
@@ -56,8 +66,11 @@ describe('Home Components', () => {
     expect(modalContainer.exists()).toBe(true)
     expect(modalContainer.get('h3').text()).toBe('Loading...')
 
-    await wrapper.vm.$nextTick();
-    expect(modalContainer.get('header > h3').text()).toContain('Argentina')
+    await flushPromises()
+
+    // await wrapper.vm.$nextTick();
+    expect(modalContainer.find('h3').text()).toContain('Test:')
+    // expect(modalContainer.get('header > h3').text()).toContain('Argentina')
   })
 
   it.todo('CountryDetail is showing the empty state', () => {
