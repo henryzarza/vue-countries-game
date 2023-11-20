@@ -26,7 +26,7 @@ defineEmits<{
     :for="nameId"
     class="text-sm font-medium mb-1 text-zinc-950 dark:text-zinc-50 capitalize"
   >
-    {{label}} {{ isRequired ? ' *' : '' }}
+    {{label}}{{ isRequired ? ' *' : '' }}
   </label>
   <select
     :value="modelValue"

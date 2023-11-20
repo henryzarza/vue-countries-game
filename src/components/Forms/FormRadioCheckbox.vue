@@ -19,7 +19,7 @@ defineEmits<{
 
 <template>
   <span class="text-sm font-medium mb-1 text-zinc-950 dark:text-zinc-50" :for="nameId">
-    {{label}} {{ isRequired ? ' *' : '' }}
+    {{label}}{{ isRequired ? ' *' : '' }}
   </span>
   <div class="flex flex-wrap gap-3">
     <div class="flex gap-1" v-for="option in options" :key="option.id">
