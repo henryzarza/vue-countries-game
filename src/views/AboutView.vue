@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import gql from 'graphql-tag'
 import { useQuery } from '@vue/apollo-composable'
 import { computed, reactive } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
@@ -18,6 +17,7 @@ import FormSelect from '@/components/Forms/FormSelect.vue'
 import FormTextarea from '@/components/Forms/FormTextarea.vue'
 import FormError from '@/components/Forms/FormError.vue'
 import type { Country } from '@/types/Home'
+import { SA_COUNTRIES_QUERY } from '@/constants/queries'
 
 const CUISINE_COUNTRIES = [
   { id: 'AR', name: '🇦🇷 Argentinian' },
@@ -25,17 +25,7 @@ const CUISINE_COUNTRIES = [
   { id: 'MX', name: '🇲🇽 Mexican' },
   { id: 'PE', name: '🇵🇪 Peruvian' },
 ]
-const SA_COUNTRIES_QUERY = gql`
-  query aboutSACountries {
-    continents(filter: { code: { eq: "SA" } }) {
-      countries {
-        code
-        emoji
-        name
-      }
-    }
-  }
-`
+
 const { result } = useQuery<{ continents: { countries: Omit<Country, 'capital'>[] }[] }>(SA_COUNTRIES_QUERY)
 
 const filterCountries = computed(
@@ -178,7 +168,7 @@ const onSubmit = () => {
           </FormInput>
         </div>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col" v-if="filterCountries.length > 0">
         <FormSelect
           label="Favorite South America Country"
           nameId="favoriteCountry"
@@ -191,7 +181,7 @@ const onSubmit = () => {
           <FormError :errors="v$.favoriteCountry.$errors" />
         </FormSelect>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col" v-if="filterCountries.length > 0">
         <FormSelect
           label="Least favorite South America Country"
           nameId="leastFavoriteCountry"
@@ -245,7 +235,6 @@ const onSubmit = () => {
           <FormError :errors="v$.randomContent.$errors" />
         </FormTextarea>
       </div>
-  
       <button
         type="submit"
         class="
@@ -253,6 +242,7 @@ const onSubmit = () => {
           bg-violet-800 font-bold hover:text-zinc-50 dark:bg-emerald-700
           hover:bg-violet-600 dark:hover:bg-emerald-600
         "
+        @click="onSubmit"
       >
         Let's Go
       </button>
