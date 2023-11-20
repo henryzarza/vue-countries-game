@@ -251,6 +251,7 @@ const onSubmit = () => {
     <div class="flex flex-col w-full max-w-md sticky top-24" v-if="!v$.$invalid">
       <h6 class="text-lg font-bold text-zinc-950 dark:text-zinc-50 mb-2">Form is Valid 🥳</h6>
       <pre
+        data-testid="form-result"
         class="
           w-full border-2 border-zinc-300 bg-zinc-100 p-3 dark:bg-zinc-800
           dark:border-zinc-400 border-dashed text-zinc-950 dark:text-zinc-50
