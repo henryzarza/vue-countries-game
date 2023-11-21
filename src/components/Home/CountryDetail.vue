@@ -53,6 +53,7 @@ const { result, error, loading } = useQuery<{
     :class="code ? 'translate-y-0' : 'translate-y-full'"
     aria-label="Country detail"
     aria-live="assertive"
+    :aria-hidden="!code"
   >
     <button
       aria-label="close"
@@ -90,7 +91,7 @@ const { result, error, loading } = useQuery<{
         "
       >
         <h3 class="text-3xl font-bold text-zinc-950 dark:text-slate-50 flex items-center">
-          <span class="text-7xl mr-1" aria-label="Mexico flag emoji">
+          <span class="text-7xl mr-1" :aria-label="`${result.country.name} flag emoji`">
             {{ result.country.emoji }}
           </span>
           {{result.country.name}}
@@ -157,16 +158,16 @@ const { result, error, loading } = useQuery<{
         <h6 class="px-4 text-lg text-zinc-950 dark:text-slate-50 font-semibold mb-2">
           States
         </h6>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 px-4 pb-4 max-h-72 overflow-y-auto">
-          <span
+        <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 px-4 pb-4 max-h-72 overflow-y-auto" aria-label="States list">
+          <li
             v-for="state in result.country.states"
             :key="state.code"
             class="text-base text-zinc-950 dark:text-slate-50"
           >
             {{state.name}}
             <strong v-if="state.code" class="font-extrabold">({{state.code}})</strong>
-          </span>
-        </div>
+        </li>
+        </ul>
       </template>
     </template>
   </section>

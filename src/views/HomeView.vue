@@ -40,6 +40,7 @@ const selectCountry = (code?: string) => {
           py-2 px-4 flex items-center bg-zinc-200 cursor-pointer hover:bg-violet-200 transition-all
           border-solid border-r-[1px] border-r-zinc-950 border-zinc-950
         "
+        aria-label="Show on map view"
       >
         <img class="w-8" src="assets/continents.png" alt="Continents icon">
       </label>
@@ -47,6 +48,7 @@ const selectCountry = (code?: string) => {
       <label
         for="card"
         class="py-2 px-4 flex items-center bg-zinc-200 cursor-pointer hover:bg-violet-200 transition-all"
+        aria-label="Show on cards list"
       >
         <img class="w-6" src="assets/checklist.png" alt="Checklist icon">
       </label>

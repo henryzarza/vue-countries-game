@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, onUnmounted } from 'vue'
-import type { Country } from '@/types/Home'
 
-const REGISTER_PER_PAGE = 40
+import type { Country } from '@/types/Home'
+import { REGISTER_PER_PAGE } from '@/constants'
 
 const { countries } = defineProps<{ countries: Country[] }>()
 const emit = defineEmits<{'selectCountry': [code: string]}>()
@@ -41,7 +41,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <ul class="grid md:grid-cols-2 grid-cols-1 gap-4">
+  <ul class="grid md:grid-cols-2 grid-cols-1 gap-4" aria-label="Countries list">
     <li
       class="
         flex gap-3 items-center bg-violet-100 rounded-sm border-[1px] border-violet-300 py-2
