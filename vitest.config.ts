@@ -11,8 +11,7 @@ export default mergeConfig(
       root: fileURLToPath(new URL('./', import.meta.url)),
       coverage: {
         reporter: ['html', 'json', 'text']
-      },
-      setupFiles: './setupTests.ts'
+      }
     }
   })
 )

@@ -4,13 +4,15 @@ const {
   label,
   placeholder,
   hasError,
-  modelValue
+  modelValue,
+  isRequired,
 } = defineProps<{
   nameId: string,
   label: string,
   placeholder?: string,
   hasError?: boolean,
-  modelValue: string
+  modelValue: string,
+  isRequired?: boolean,
 }>()
 defineEmits<{
   'update:modelValue': [value: string | null]
@@ -22,7 +24,7 @@ defineEmits<{
     :for="nameId"
     class="text-sm font-medium mb-1 text-zinc-950 dark:text-zinc-50 capitalize"
   >
-    {{label}}
+    {{label}}{{ isRequired ? ' *' : '' }}
   </label>
   <textarea
     :value="modelValue"

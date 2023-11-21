@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import gql from 'graphql-tag'
 import { useQuery } from '@vue/apollo-composable'
 import { computed, reactive } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
+import {
+  required,
+  email,
+  numeric,
+  minLength,
+  helpers,
+  maxValue
+} from '@vuelidate/validators'
 
 import FormInput from '@/components/Forms/FormInput.vue'
 import FormRadioCheckbox from '@/components/Forms/FormRadioCheckbox.vue'
@@ -10,7 +17,7 @@ import FormSelect from '@/components/Forms/FormSelect.vue'
 import FormTextarea from '@/components/Forms/FormTextarea.vue'
 import FormError from '@/components/Forms/FormError.vue'
 import type { Country } from '@/types/Home'
-import { aboutFormFields, aboutFormRules } from '@/constants'
+import { SA_COUNTRIES_QUERY } from '@/constants/queries'
 
 const CUISINE_COUNTRIES = [
   { id: 'AR', name: '🇦🇷 Argentinian' },
@@ -18,17 +25,7 @@ const CUISINE_COUNTRIES = [
   { id: 'MX', name: '🇲🇽 Mexican' },
   { id: 'PE', name: '🇵🇪 Peruvian' },
 ]
-const SA_COUNTRIES_QUERY = gql`
-  query aboutSACountries {
-    continents(filter: { code: { eq: "SA" } }) {
-      countries {
-        code
-        emoji
-        name
-      }
-    }
-  }
-`
+
 const { result } = useQuery<{ continents: { countries: Omit<Country, 'capital'>[] }[] }>(SA_COUNTRIES_QUERY)
 
 const filterCountries = computed(
@@ -40,8 +37,59 @@ const filterCountries = computed(
     return []
   })
 
-const formState = reactive(aboutFormFields)
-const v$ = useVuelidate(aboutFormRules, formState)
+const formState = reactive({
+  fullName: '',
+  email: '',
+  countriesVisited: '',
+  countriesThisYear: '',
+  favoriteCountry: '',
+  leastFavoriteCountry: '',
+  favoriteFood: '',
+  andeanCountries: new Set(),
+  password: '',
+  randomContent: ''
+})
+const v$ = useVuelidate({
+  fullName: {
+    required: helpers.withMessage('This field is required', required),
+    minLength: helpers.withMessage('Full Name must be at least 3 characters', minLength(3)),
+    $autoDirty: true
+  },
+  email: {
+    required: helpers.withMessage('This field is required', required),
+    email: helpers.withMessage('Email format is invalid', email),
+    minLength: helpers.withMessage('Email must be at least 6 characters', minLength(6)),
+    $autoDirty: true
+  },
+  countriesVisited: {
+    required: helpers.withMessage('This field is required', required),
+    numeric: helpers.withMessage('This field must be numeric', numeric),
+    maxValue: helpers.withMessage('There are only 195 countries in the world. Did you travel to Mars?', maxValue(195)),
+    $autoDirty: true
+  },
+  countriesThisYear: {
+    required: helpers.withMessage('This field is required', required),
+    numeric: helpers.withMessage('This field must be numeric', numeric),
+    maxValue: helpers.withMessage('There are only 195 countries in the world. Did you travel to Mars?', maxValue(195)),
+    $autoDirty: true
+  },
+  favoriteCountry: {
+    required: helpers.withMessage('This field is required', required),
+    $autoDirty: true
+  },
+  favoriteFood: {
+    required: helpers.withMessage('This field is required', required)
+  },
+  password: {
+    required: helpers.withMessage('This field is required', required),
+    minLength: helpers.withMessage('Email must be at least 8 characters', minLength(8)),
+    $autoDirty: true
+  },
+  randomContent: {
+    minLength: helpers.withMessage('This field must be at least 3 characters', minLength(10)),
+    $autoDirty: true
+  }
+}, formState)
 
 const updateCheckboxValue = (value: string) => {
   if (formState.andeanCountries.has(value)) {
@@ -65,7 +113,7 @@ const onSubmit = () => {
     This page is just for testing and learning purposes about working with forms validations
     in VueJS, it's me just playing around 🤷
   </p>
-  <div class="flex flex-col md:flex-row gap-4 justify-center items-start">
+  <div class="flex flex-col md:flex-row gap-4 justify-center items-start" v-if="!!formState">
     <form class="flex flex-col w-full max-w-md gap-5 mx-auto" @submit.prevent="onSubmit">
       <div class="flex flex-col">
         <FormInput
@@ -120,7 +168,7 @@ const onSubmit = () => {
           </FormInput>
         </div>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col" v-if="filterCountries.length > 0">
         <FormSelect
           label="Favorite South America Country"
           nameId="favoriteCountry"
@@ -133,7 +181,7 @@ const onSubmit = () => {
           <FormError :errors="v$.favoriteCountry.$errors" />
         </FormSelect>
       </div>
-      <div class="flex flex-col">
+      <div class="flex flex-col" v-if="filterCountries.length > 0">
         <FormSelect
           label="Least favorite South America Country"
           nameId="leastFavoriteCountry"
@@ -187,7 +235,6 @@ const onSubmit = () => {
           <FormError :errors="v$.randomContent.$errors" />
         </FormTextarea>
       </div>
-  
       <button
         type="submit"
         class="
@@ -195,6 +242,7 @@ const onSubmit = () => {
           bg-violet-800 font-bold hover:text-zinc-50 dark:bg-emerald-700
           hover:bg-violet-600 dark:hover:bg-emerald-600
         "
+        @click="onSubmit"
       >
         Let's Go
       </button>
@@ -203,6 +251,7 @@ const onSubmit = () => {
     <div class="flex flex-col w-full max-w-md sticky top-24" v-if="!v$.$invalid">
       <h6 class="text-lg font-bold text-zinc-950 dark:text-zinc-50 mb-2">Form is Valid 🥳</h6>
       <pre
+        data-testid="form-result"
         class="
           w-full border-2 border-zinc-300 bg-zinc-100 p-3 dark:bg-zinc-800
           dark:border-zinc-400 border-dashed text-zinc-950 dark:text-zinc-50
