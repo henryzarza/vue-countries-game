@@ -29,6 +29,7 @@ const emit = defineEmits<{
     "
     draggable="true"
     @dragstart="emit('startDrag', $event, { country: data, continentCode })"
+    aria-label="Drag country item"
   >
     <h6 class="text-6xl leading-[0.9]">
       {{data.emoji}}

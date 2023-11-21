@@ -1,11 +1,11 @@
 import { describe, it, expect, beforeAll, vi } from 'vitest'
 import { mount, shallowMount } from '@vue/test-utils'
 
-import BaseFooter from '../BaseFooter.vue'
-import BaseLoader from '../BaseLoader.vue'
-import BaseNavbar from '../BaseNavbar.vue'
-import BaseThemeToggle from '../BaseThemeToggle.vue'
-import StateUI from '../StateUI.vue'
+import BaseFooter from '@/components/BaseFooter.vue'
+import BaseLoader from '@/components/BaseLoader.vue'
+import BaseNavbar from '@/components/BaseNavbar.vue'
+import BaseThemeToggle from '@/components/BaseThemeToggle.vue'
+import StateUI from '@/components/StateUI.vue'
 
 describe('Base Components', () => {
   beforeAll(() => {
