@@ -22,7 +22,7 @@ describe('About View', () => {
     vi.restoreAllMocks()
   })
 
-  it('Request is being made and the selects are hidden', async () => {
+  it('request is being made and the selects are hidden', async () => {
     const wrapper = mount(AboutView)
     const submitButton = wrapper.find('button[type="submit"]')
     
@@ -35,7 +35,7 @@ describe('About View', () => {
     expect(wrapper.findAll('select')).toHaveLength(2)
   })
 
-  it('Errors messages are show when the user type', async () => {
+  it('errors messages are show when the user type', async () => {
     const wrapper = mount(AboutView)
     const inputs = wrapper.findAll('input')
     const textarea = wrapper.find('textarea')
