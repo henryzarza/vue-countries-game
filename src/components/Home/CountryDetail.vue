@@ -1,40 +1,16 @@
 <script setup lang="ts">
-import gql from 'graphql-tag'
 import { useQuery } from '@vue/apollo-composable'
 import BaseLoader from '../BaseLoader.vue'
 import type { CountryDetail } from '@/types/Home'
+import { COUNTRY_DETAIL_QUERY } from '@/constants/queries'
 
-const COUNTRY_DETAIL = gql`
-  query countryDetail($code: ID!) {
-    country(code: $code) {
-      emoji
-      name
-      capital
-      awsRegion
-      currencies
-      phone
-      states {
-        code
-        name
-      }
-      continent {
-        name
-      }
-      languages {
-        code
-        name
-        native
-      }
-    }
-  }
-`
 const props = defineProps<{ code: string | undefined | null }>()
 const emit = defineEmits<{'closeModal': []}>()
 
 const { result, error, loading } = useQuery<{
     country: CountryDetail
   }>(
-    COUNTRY_DETAIL,
+    COUNTRY_DETAIL_QUERY,
     () => ({ code: props.code }),
     () => ({ enabled: !!props.code })
   )
@@ -110,7 +86,7 @@ const { result, error, loading } = useQuery<{
           <span class="text-sm font-semibold text-zinc-950 dark:text-slate-50">
             Currencies
           </span>
-          <span class="text-base text-zinc-950 dark:text-slate-50">
+          <span class="text-base text-zinc-950 dark:text-slate-50" data-testid="country-currencies">
             {{ result.country.currencies.join(' / ') }}
           </span>
         </div>
@@ -118,7 +94,7 @@ const { result, error, loading } = useQuery<{
           <span class="text-sm font-semibold text-zinc-950 dark:text-slate-50">
             Indicator
           </span>
-          <span class="text-base text-zinc-950 dark:text-slate-50 font-bold">
+          <span class="text-base text-zinc-950 dark:text-slate-50 font-bold" data-testid="country-indicator">
             +{{ result.country.phone}}
           </span>
         </div>
@@ -126,7 +102,7 @@ const { result, error, loading } = useQuery<{
           <span class="text-sm font-semibold text-zinc-950 dark:text-slate-50">
             Continent
           </span>
-          <span class="text-base text-zinc-950 dark:text-slate-50">
+          <span class="text-base text-zinc-950 dark:text-slate-50" data-testid="country-continent">
             {{result.country.continent?.name || 'Unknown'}}
           </span>
         </div>
@@ -138,6 +114,7 @@ const { result, error, loading } = useQuery<{
             v-for="language in result.country.languages"
             class="text-base text-zinc-950 dark:text-slate-50"
             :key="language.code"
+            data-testid="country-languages"
           >
             {{language.native}} ({{language.name}}) - <strong class="font-semibold">{{language.code}}</strong>
           </span>
@@ -146,7 +123,7 @@ const { result, error, loading } = useQuery<{
           <span class="text-sm font-semibold text-zinc-950 dark:text-slate-50">
             AWS Region
           </span>
-          <span class="text-base text-zinc-950 dark:text-slate-50">
+          <span class="text-base text-zinc-950 dark:text-slate-50" data-testid="country-aws">
             {{result.country.awsRegion}}
           </span>
         </div>

@@ -5,13 +5,27 @@ import { createMockClient } from 'mock-apollo-client'
 
 import CountryDetail from '@/components/Home/CountryDetail.vue'
 import ListView from '@/components/Home/ListView.vue'
-import { MOCK_COUNTRIES } from '@/mocks/data'
+import { COUNTRIES_QUERY, COUNTRY_DETAIL_QUERY } from '@/constants/queries'
+import { MOCK_COUNTRIES, MOCK_COUNTRY } from '@/mocks/data'
 
 describe('Home Components and View', () => {
   const mockObserve = vi.fn()
 
   beforeEach(() => {
-    provideApolloClient(createMockClient())
+    const mockClient = createMockClient()
+
+    mockClient.setRequestHandler(COUNTRIES_QUERY, () => Promise.resolve({ data: { countries: MOCK_COUNTRIES }}))
+
+    mockClient.setRequestHandler(COUNTRY_DETAIL_QUERY, ({ code }) => {
+      if (code === 'EMPTY')
+        return Promise.resolve({ data: { country: null }})
+      else if (code === 'ERROR')
+        return Promise.reject(new Error('GraphQL Network Error'))
+
+      return Promise.resolve({ data: { country: MOCK_COUNTRY }})
+    })
+
+    provideApolloClient(mockClient)
   })
 
   afterEach(() => {
@@ -59,23 +73,47 @@ describe('Home Components and View', () => {
     expect(selectCountryEvent[0]).toStrictEqual([MOCK_COUNTRIES[0].code])
   })
 
-  it.todo('CountryDetail is showing the data properly', async () => {
+  it('CountryDetail is showing the data properly', async () => {
     const wrapper = mount(CountryDetail, { props: { code: "AR" }})
-    const modalContainer = wrapper.find('section')
-    
+    const modalContainer = wrapper.find('section[aria-label="Country detail"]')
+
     expect(modalContainer.exists()).toBe(true)
     expect(modalContainer.get('h3').text()).toBe('Loading...')
 
     await flushPromises()
 
-    // await wrapper.vm.$nextTick();
-    expect(modalContainer.find('h3').text()).toContain('Test:')
-    // expect(modalContainer.get('header > h3').text()).toContain('Argentina')
+    expect(modalContainer.find('h3').text()).toContain('Argentina')
+    expect(modalContainer.findAll('h6')).toHaveLength(3)
+    expect(modalContainer.findAll('h6')[0].text()).toBe('Capital: Buenos Aires')
+    expect(modalContainer.find('span[data-testid="country-currencies"]').text()).toBe('ARS')
+    expect(modalContainer.find('span[data-testid="country-indicator"]').text()).toBe('+54')
+    expect(modalContainer.find('span[data-testid="country-continent"]').text()).toBe('South America')
+    expect(modalContainer.findAll('span[data-testid="country-languages"]')).toHaveLength(2)
+    expect(modalContainer.find('span[data-testid="country-aws"]').text()).toBe('sa-east-1')
+    expect(modalContainer.findAll('ul[aria-label="States list"] > li')).toHaveLength(24)
   })
 
-  it.todo('CountryDetail is showing the empty state', () => {
+  it('CountryDetail is showing the empty state', async () => {
+    const wrapper = mount(CountryDetail, { props: { code: "EMPTY" }})
+    const modalContainer = wrapper.find('section[aria-label="Country detail"]')
+
+    expect(modalContainer.exists()).toBe(true)
+    expect(modalContainer.get('h3').text()).toBe('Loading...')
+
+    await flushPromises()
+
+    expect(modalContainer.find('h3').text()).toBe('There are no data to show 😭')
   })
 
-  it.todo('CountryDetail is showing the error state', () => {
+  it('CountryDetail is showing the error state', async () => {
+    const wrapper = mount(CountryDetail, { props: { code: "ERROR" }})
+    const modalContainer = wrapper.find('section[aria-label="Country detail"]')
+
+    expect(modalContainer.exists()).toBe(true)
+    expect(modalContainer.get('h3').text()).toBe('Loading...')
+
+    await flushPromises()
+
+    expect(modalContainer.find('h3').text()).toBe('GraphQL Network Error')
   })
 })
