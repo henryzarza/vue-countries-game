@@ -236,3 +236,34 @@ export const MOCK_GAME_COUNTRIES = [
     "name": "Colombia"
   }
 ]
+
+export const MOCK_CONTINENTS = [
+  {
+    "code": "AF",
+    "name": "Africa"
+  },
+  {
+    "code": "AN",
+    "name": "Antarctica"
+  },
+  {
+    "code": "AS",
+    "name": "Asia"
+  },
+  {
+    "code": "EU",
+    "name": "Europe"
+  },
+  {
+    "code": "NA",
+    "name": "North America"
+  },
+  {
+    "code": "OC",
+    "name": "Oceania"
+  },
+  {
+    "code": "SA",
+    "name": "South America"
+  }
+]

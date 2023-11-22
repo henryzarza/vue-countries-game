@@ -57,3 +57,20 @@ export const COUNTRY_DETAIL_QUERY = gql`
     }
   }
 `
+
+export const CONTINENT_GAME_DATA_QUERY = gql`
+  query continentsGameData {
+    continents {
+      code
+      name
+    }
+    countries {
+      code
+      name
+      emoji
+      continent {
+        code
+      }
+    }
+  }
+`
