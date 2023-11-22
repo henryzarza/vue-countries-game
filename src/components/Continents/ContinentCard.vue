@@ -25,7 +25,7 @@ const emit = defineEmits<{
     class="
       max-w-[10rem] rounded hover:shadow-md transition hover:scale-105 p-2
       border-2 border-solid border-slate-200 dark:border-slate-600
-      cursor-pointer bg-slate-100 dark:bg-slate-900 flex flex-col text-center
+      cursor-grab bg-slate-100 dark:bg-slate-900 flex flex-col text-center
     "
     draggable="true"
     @dragstart="emit('startDrag', $event, { country: data, continentCode })"
