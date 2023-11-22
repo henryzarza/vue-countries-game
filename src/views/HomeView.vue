@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import gql from 'graphql-tag'
 import { useQuery } from '@vue/apollo-composable'
 
 import type { Country } from '@/types/Home'
@@ -8,17 +7,7 @@ import ListView from '@/components/Home/ListView.vue'
 import MapView from '@/components/Home/MapView.vue'
 import StateUI from '@/components/StateUI.vue'
 import CountryDetail from '@/components/Home/CountryDetail.vue'
-
-const COUNTRIES_QUERY = gql`
-  query countries {
-    countries {
-      code
-      emoji
-      name
-      capital
-    }
-  }
-`
+import { COUNTRIES_QUERY } from '@/constants/queries'
 
 const view = ref('map')
 const selectedCountryCode = ref()

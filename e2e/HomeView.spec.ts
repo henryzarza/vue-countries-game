@@ -28,7 +28,7 @@ test('Home Page - country detail info is being shown', async ({ page }) => {
   const countryItem = await page.getByText('🇦🇷Argentina Capital: Buenos AiresCode AR');
   const countryDetailModal = await page.getByLabel('Country detail');
 
-  // await expect(countryDetailModal).toBeHidden();
+  await expect(countryDetailModal).toBeHidden();
   await expect(countryItem).toBeVisible();
   
   await countryItem.click();

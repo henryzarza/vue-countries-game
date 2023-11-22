@@ -11,3 +11,39 @@ export const SA_COUNTRIES_QUERY = gql`
     }
   }
 `
+
+export const COUNTRIES_QUERY = gql`
+  query countries {
+    countries {
+      code
+      emoji
+      name
+      capital
+    }
+  }
+`
+
+export const COUNTRY_DETAIL_QUERY = gql`
+  query countryDetail($code: ID!) {
+    country(code: $code) {
+      emoji
+      name
+      capital
+      awsRegion
+      currencies
+      phone
+      states {
+        code
+        name
+      }
+      continent {
+        name
+      }
+      languages {
+        code
+        name
+        native
+      }
+    }
+  }
+`
