@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import gql from 'graphql-tag'
 import { useQuery } from '@vue/apollo-composable'
 
 import FlipCard from '@/components/Flipping/FlipCard.vue'
@@ -10,18 +9,9 @@ import type { Country } from '@/types/Game'
 import { createArrayToPlay } from '@/utils'
 import { MAX_MOVEMENTS, TIME_TO_TURN_OVER } from '@/constants'
 import { COUNTRIES_TO_PLAY } from '@/constants'
+import { GAME_COUNTRIES_QUERY } from '@/constants/queries'
 
-const COUNTRIES_QUERY = gql`
-  query flippingGameData {
-    countries {
-      code
-      emoji
-      name
-    }
-  }
-`
-
-const { result, loading, error, onResult } = useQuery<{ countries: Country[] }>(COUNTRIES_QUERY)
+const { result, loading, error, onResult } = useQuery<{ countries: Country[] }>(GAME_COUNTRIES_QUERY)
 
 const shuffleCountries = ref<Country[]>([])
 
