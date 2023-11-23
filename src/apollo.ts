@@ -1,8 +1,9 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
+import { GRAPHQL_ENDPOINT_URL } from './constants'
 
 // HTTP connection to the API
 const httpLink = createHttpLink({
-  uri: 'https://countries.trevorblades.com/graphql',
+  uri: GRAPHQL_ENDPOINT_URL,
 })
 
 // Cache implementation

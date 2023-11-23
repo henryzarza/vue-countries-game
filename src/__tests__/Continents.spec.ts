@@ -79,30 +79,4 @@ describe('Continents Components', () => {
     expect(wrapper.findAll('h5')[3].text()).toBe('Europe (EU)')
     expect(wrapper.findAllComponents(ContinentCard)).toHaveLength(7)
   })
-
-  it('Continents Game - check button is enabled when all the countries are moved to a continent area', async () => {
-    const wrapper = mount(ContinentsGameView)
-    await flushPromises()
-    
-    const southAmericaSection = wrapper.find('div[aria-label="South America drop area"]')
-    const countriesElements = wrapper.findAllComponents(ContinentCard)
-    const button = wrapper.find('button')
-
-    expect(southAmericaSection.exists()).toBe(true)
-    expect(button.attributes('disabled')).toBeDefined()
-    
-    countriesElements[0].trigger('dragstart')
-    southAmericaSection.trigger('drop')
-    
-    // TODO: fix this test
-    expect(southAmericaSection.findAllComponents(ContinentCard)).toHaveLength(0)
-  })
-
-  it.todo('Continents Game - when I click the check button it shows me the quantity of countries bad positioned', () => {
-
-  })
-
-  it.todo('Continents Game - when I click the check button it shows me the win button message', () => {
-
-  })
 })

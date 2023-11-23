@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-import { REGISTER_PER_PAGE } from '../src/constants';
+import { GRAPHQL_ENDPOINT_URL, REGISTER_PER_PAGE } from '../src/constants';
 
 test('Home Page - is showing the countries properly on a map and list', async ({ page }) => {
   await page.goto('/');
@@ -42,7 +42,7 @@ test('Home Page - country detail info is being shown', async ({ page }) => {
 
 test('Home Page - is showing the empty message when there are not data to show', async ({ page }) => {
   // mock data to not call the real API
-  await page.route('https://countries.trevorblades.com/graphql', async route => {
+  await page.route(GRAPHQL_ENDPOINT_URL, async route => {
     const json = { data: [] };
     await route.fulfill({ json });
   });
