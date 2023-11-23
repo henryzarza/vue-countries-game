@@ -1,8 +1,7 @@
 <template>
   <footer class="px-4 pt-7 pb-4 flex bg-zinc-100 dark:bg-slate-700 flex-col gap-6 items-center">
     <p class="text-base text-zinc-950 dark:text-zinc-50 w-[30rem] max-w-full text-center">
-      This is a small project to study and improve my knowlegde in VueJS.
-      I used a
+      This is a small project to study and improve my knowlegde in VueJS. I used a
       <a
         href="https://countries.trevorblades.com/"
         target="_blank"
@@ -10,7 +9,8 @@
         class="underline text-violet-800 dark:text-emerald-500 font-semibold transition-colors hover:text-violet-500 dark:hover:text-emerald-200"
       >
         free countries GraphQL API
-      </a> made by Trevor Blades. <br>
+      </a>
+      made by Trevor Blades. <br />
       During my learning proccess I created
       <a
         href="https://github.com/henryzarza/vue-training-app"
@@ -19,7 +19,8 @@
         class="underline text-violet-800 dark:text-emerald-500 font-semibold transition-colors hover:text-violet-500 dark:hover:text-emerald-200"
       >
         this repo
-      </a> and
+      </a>
+      and
       <a
         href="https://mirror-maiasaura-9b2.notion.site/VueJS-notes-4d45dcff78bc4a87bbe4a2acd9030cf8"
         target="_blank"

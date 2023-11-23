@@ -7,7 +7,7 @@ import router from './router'
 import { apolloClient } from './apollo'
 
 const app = createApp({
-  setup () {
+  setup() {
     provide(DefaultApolloClient, apolloClient)
   },
   render: () => h(App)

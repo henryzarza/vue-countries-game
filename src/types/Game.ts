@@ -1,15 +1,15 @@
 interface Country {
-  code: string;
-  emoji: string;
-  name: string;
+  code: string
+  emoji: string
+  name: string
   continent?: {
-    code: CONTINENTS_CODES;
+    code: CONTINENTS_CODES
   }
 }
 
 interface Continent {
-  code: CONTINENTS_CODES;
-  name: string;
+  code: CONTINENTS_CODES
+  name: string
 }
 
 export enum CONTINENTS_CODES {
@@ -19,10 +19,7 @@ export enum CONTINENTS_CODES {
   EU = 'EU',
   NA = 'NA',
   OC = 'OC',
-  SA = 'SA',
+  SA = 'SA'
 }
 
-export {
-  type Country,
-  type Continent,
-}
+export { type Country, type Continent }

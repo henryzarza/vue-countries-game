@@ -11,7 +11,9 @@ import { MAX_MOVEMENTS, TIME_TO_TURN_OVER } from '@/constants'
 import { COUNTRIES_TO_PLAY } from '@/constants'
 import { GAME_COUNTRIES_QUERY } from '@/constants/queries'
 
-const { result, loading, error, onResult } = useQuery<{ countries: Country[] }>(GAME_COUNTRIES_QUERY)
+const { result, loading, error, onResult } = useQuery<{ countries: Country[] }>(
+  GAME_COUNTRIES_QUERY
+)
 
 const shuffleCountries = ref<Country[]>([])
 
@@ -68,19 +70,16 @@ const resetGame = () => {
   }, 100)
 }
 // end game logic
-
 </script>
 
 <template>
-  <h1 class="text-4xl font-bold text-zinc-950 dark:text-zinc-50 mb-4 text-center">
-    Flipping Game
-  </h1>
+  <h1 class="text-4xl font-bold text-zinc-950 dark:text-zinc-50 mb-4 text-center">Flipping Game</h1>
   <p class="text-base text-zinc-950 dark:text-zinc-50 max-w-xl w-full mx-auto mb-4">
-    The idea of this memory game is: you click on a card, then the card flips over,
-    you will see an emoji with the flag and the name of the country, then you click
-    on a different card and if it matches (they are the same), well you have a <strong class="font-semibold">match</strong>.
-    If there is no match both will turn over, so you must memorize the position of each
-    country on the card to win the game. <strong class="font-semibold">Enjoy it and good luck!</strong>
+    The idea of this memory game is: you click on a card, then the card flips over, you will see an
+    emoji with the flag and the name of the country, then you click on a different card and if it
+    matches (they are the same), well you have a <strong class="font-semibold">match</strong>. If
+    there is no match both will turn over, so you must memorize the position of each country on the
+    card to win the game. <strong class="font-semibold">Enjoy it and good luck!</strong>
   </p>
 
   <!-- When is loading -->
@@ -92,7 +91,7 @@ const resetGame = () => {
   <!-- When there are data -->
   <template v-else-if="shuffleCountries.length > 0">
     <h6 class="flex items-center justify-center text-base text-zinc-950 dark:text-zinc-50 mb-6">
-      Movements: <span class="text-4xl font-semibold ml-3">{{quantityMovements}}</span>
+      Movements: <span class="text-4xl font-semibold ml-3">{{ quantityMovements }}</span>
     </h6>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-4">
       <FlipCard
@@ -107,7 +106,7 @@ const resetGame = () => {
     </div>
 
     <GameResult
-      :hasWon="indexesGuessed.every(el => !!el)"
+      :hasWon="indexesGuessed.every((el) => !!el)"
       :isVisible="quantityMovements === 0"
       @resetGame="resetGame"
     />
