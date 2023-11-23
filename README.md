@@ -1,21 +1,6 @@
 # vue-countries-game
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+This small project was to practice and learn things like Playwright, Vitest, and VueJS. I used [this free GraphQL API](https://countries.trevorblades.com/) made by **Trevor Blades**.
 
 ## Customize configuration
 
@@ -45,6 +30,18 @@ npm run build
 npm run test:unit
 ```
 
+<img width="518" alt="Screenshot 2023-11-23 at 11 41 00" src="https://github.com/henryzarza/vue-countries-game/assets/28515670/cbbf5804-5314-4f15-a6e6-0bbe9cc9991d">
+
+
+### Run Unit Tests coverage with [Vitest](https://vitest.dev/)
+
+```sh
+npm run test:unit:coverage
+```
+
+<img width="934" alt="Screenshot 2023-11-23 at 11 44 40" src="https://github.com/henryzarza/vue-countries-game/assets/28515670/f03c81a3-98de-470b-ae1e-5afc4850e1b1">
+
+
 ### Run End-to-End Tests with [Playwright](https://playwright.dev)
 
 ```sh
@@ -64,8 +61,20 @@ npm run test:e2e -- tests/example.spec.ts
 npm run test:e2e -- --debug
 ```
 
+<img width="512" alt="Screenshot 2023-11-23 at 11 40 30" src="https://github.com/henryzarza/vue-countries-game/assets/28515670/35a7cd45-5eb0-4b7f-994a-2a07714ec57e">
+
 ### Lint with [ESLint](https://eslint.org/)
 
 ```sh
 npm run lint
 ```
+
+### Run format
+
+```sh
+npm run format
+```
+
+<hr />
+
+#### Made with ❤️ by Henry Zarza
