@@ -1,6 +1,6 @@
 # vue-countries-game
 
-This small project was to practice and learn things like Playwright, Vitest, and VueJS. I used [this free GraphQL API](https://countries.trevorblades.com/) made by **Trevor Blades**.
+This small project was to practice and learn new things like Playwright, Vitest, Vite, and Vue 3. I used [this free GraphQL API](https://countries.trevorblades.com/) made by **Trevor Blades**.
 
 ## Customize configuration
 
