@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import gql from 'graphql-tag'
 import { useQuery } from '@vue/apollo-composable'
 
 import ContinentCard from '@/components/Continents/ContinentCard.vue'
@@ -9,27 +8,12 @@ import StateUI from '@/components/StateUI.vue'
 import { type Country, CONTINENTS_CODES } from '@/types/Game'
 import { shuffleArray } from '@/utils'
 import { COUNTRIES_TO_DRAG } from '@/constants'
+import { CONTINENT_GAME_DATA_QUERY } from '@/constants/queries'
 
-const GAME_DATA_QUERY = gql`
-  query continentsGameData {
-    continents {
-      code
-      name
-    }
-    countries {
-      code
-      name
-      emoji
-      continent {
-        code
-      }
-    }
-  }
-`
 const { result, loading, error, onResult } = useQuery<{
     continents: Continent[],
     countries: Country[]
-  }>(GAME_DATA_QUERY)
+  }>(CONTINENT_GAME_DATA_QUERY)
 
 const isHard = ref(true)
 const hasWon = ref(false)
@@ -188,10 +172,11 @@ const playAgain = () => {
         @drop="onDrop($event, continent.code)"
         @dragover.prevent
         @dragenter.prevent
+        :aria-label="`${continent.name} drop area`"
       >
-        <h6 class="text-lg absolute top-1 left-3 font-bold text-zinc-700 dark:text-zinc-50">
+        <h5 class="text-lg absolute top-1 left-3 font-bold text-zinc-700 dark:text-zinc-50">
           {{continent.name}} ({{ continent.code }})
-        </h6>
+        </h5>
         <ContinentCard
           v-for="country in dropInteractionArrays[continent.code]"
           :key="country.code"

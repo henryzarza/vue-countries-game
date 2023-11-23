@@ -12,3 +12,5 @@ export const TIME_TO_TURN_OVER = 1500
 
 // quantity of countries to play with in Continents game
 export const COUNTRIES_TO_DRAG = 27
+
+export const GRAPHQL_ENDPOINT_URL = 'https://countries.trevorblades.com/graphql'

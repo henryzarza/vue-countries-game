@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-import { MAX_MOVEMENTS } from '../src/constants';
+import { GRAPHQL_ENDPOINT_URL, MAX_MOVEMENTS } from '../src/constants';
 
 test('Flipping Game - data is being shown properly', async ({ page }) => {
   await page.goto('/flipping-game');
@@ -19,7 +19,7 @@ test('Flipping Game - data is being shown properly', async ({ page }) => {
 
 test('Flipping Game - is showing the empty message when there are not data to show', async ({ page }) => {
   // mock data to not call the real API
-  await page.route('https://countries.trevorblades.com/graphql', async route => {
+  await page.route(GRAPHQL_ENDPOINT_URL, async route => {
     const json = { data: [] };
     await route.fulfill({ json });
   });
@@ -33,7 +33,7 @@ test('Flipping Game - is showing the empty message when there are not data to sh
 });
 
 test('Flipping Game - is showing the error message', async ({ page }) => {
-  await page.route('https://countries.trevorblades.com/graphql', async route => {
+  await page.route(GRAPHQL_ENDPOINT_URL, async route => {
     await route.abort();
   });
 

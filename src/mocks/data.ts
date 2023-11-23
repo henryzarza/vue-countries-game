@@ -236,3 +236,93 @@ export const MOCK_GAME_COUNTRIES = [
     "name": "Colombia"
   }
 ]
+
+export const MOCK_CONTINENTS = [
+  {
+    "code": "AF",
+    "name": "Africa"
+  },
+  {
+    "code": "AN",
+    "name": "Antarctica"
+  },
+  {
+    "code": "AS",
+    "name": "Asia"
+  },
+  {
+    "code": "EU",
+    "name": "Europe"
+  },
+  {
+    "code": "NA",
+    "name": "North America"
+  },
+  {
+    "code": "OC",
+    "name": "Oceania"
+  },
+  {
+    "code": "SA",
+    "name": "South America"
+  }
+]
+
+export const MOCK_CONTINENTS_COUNTRIES = [
+  {
+    "code": "AR",
+    "emoji": "🇦🇷",
+    "name": "Argentina",
+    "continent": {
+      "code": "SA"
+    }
+  },
+  {
+    "code": "BO",
+    "emoji": "🇧🇴",
+    "name": "Bolivia",
+    "continent": {
+      "code": "SA"
+    }
+  },
+  {
+    "code": "BR",
+    "emoji": "🇧🇷",
+    "name": "Brazil",
+    "continent": {
+      "code": "SA"
+    }
+  },
+  {
+    "code": "CL",
+    "emoji": "🇨🇱",
+    "name": "Chile",
+    "continent": {
+      "code": "SA"
+    }
+  },
+  {
+    "code": "CO",
+    "emoji": "🇨🇴",
+    "name": "Colombia",
+    "continent": {
+      "code": "SA"
+    }
+  },
+  {
+    "code": "EC",
+    "emoji": "🇪🇨",
+    "name": "Ecuador",
+    "continent": {
+      "code": "SA"
+    }
+  },
+  {
+    "code": "PE",
+    "emoji": "🇵🇪",
+    "name": "Peru",
+    "continent": {
+      "code": "SA"
+    }
+  }
+]
