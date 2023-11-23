@@ -208,3 +208,31 @@ export const MOCK_COUNTRY = {
     }
   ],
 }
+
+export const MOCK_GAME_COUNTRIES = [
+  {
+    "code": "AR",
+    "emoji": "🇦🇷",
+    "name": "Argentina"
+  },
+  {
+    "code": "BO",
+    "emoji": "🇧🇴",
+    "name": "Bolivia"
+  },
+  {
+    "code": "BR",
+    "emoji": "🇧🇷",
+    "name": "Brazil"
+  },
+  {
+    "code": "CL",
+    "emoji": "🇨🇱",
+    "name": "Chile"
+  },
+  {
+    "code": "CO",
+    "emoji": "🇨🇴",
+    "name": "Colombia"
+  }
+]

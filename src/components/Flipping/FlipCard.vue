@@ -22,7 +22,7 @@ const emit = defineEmits<{'selectCountry': [index: number]}>()
       'picked pointer-events-none': isPicked,
       'guessed pointer-events-none': isGuessed
     }"
-    @click="emit('selectCountry', index)"
+    @click="isPicked || isGuessed ? {} : emit('selectCountry', index)"
   >
     <!-- Card front -->
     <div

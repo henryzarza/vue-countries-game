@@ -23,6 +23,16 @@ export const COUNTRIES_QUERY = gql`
   }
 `
 
+export const GAME_COUNTRIES_QUERY = gql`
+  query countries {
+    countries {
+      code
+      emoji
+      name
+    }
+  }
+`
+
 export const COUNTRY_DETAIL_QUERY = gql`
   query countryDetail($code: ID!) {
     country(code: $code) {
