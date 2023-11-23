@@ -2,14 +2,7 @@
 import { useQuery } from '@vue/apollo-composable'
 import { computed, reactive } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
-import {
-  required,
-  email,
-  numeric,
-  minLength,
-  helpers,
-  maxValue
-} from '@vuelidate/validators'
+import { required, email, numeric, minLength, helpers, maxValue } from '@vuelidate/validators'
 
 import FormInput from '@/components/Forms/FormInput.vue'
 import FormRadioCheckbox from '@/components/Forms/FormRadioCheckbox.vue'
@@ -23,19 +16,23 @@ const CUISINE_COUNTRIES = [
   { id: 'AR', name: '🇦🇷 Argentinian' },
   { id: 'CO', name: '🇨🇴 Colombian' },
   { id: 'MX', name: '🇲🇽 Mexican' },
-  { id: 'PE', name: '🇵🇪 Peruvian' },
+  { id: 'PE', name: '🇵🇪 Peruvian' }
 ]
 
-const { result } = useQuery<{ continents: { countries: Omit<Country, 'capital'>[] }[] }>(SA_COUNTRIES_QUERY)
+const { result } = useQuery<{ continents: { countries: Omit<Country, 'capital'>[] }[] }>(
+  SA_COUNTRIES_QUERY
+)
 
-const filterCountries = computed(
-  () => {
-    if (result.value?.continents && result.value.continents.length > 0) {
-      return result.value.continents[0].countries.map(({ code, name, emoji }) => ({ id: code, name: `${emoji} ${name}` }))
-    }
+const filterCountries = computed(() => {
+  if (result.value?.continents && result.value.continents.length > 0) {
+    return result.value.continents[0].countries.map(({ code, name, emoji }) => ({
+      id: code,
+      name: `${emoji} ${name}`
+    }))
+  }
 
-    return []
-  })
+  return []
+})
 
 const formState = reactive({
   fullName: '',
@@ -49,47 +46,56 @@ const formState = reactive({
   password: '',
   randomContent: ''
 })
-const v$ = useVuelidate({
-  fullName: {
-    required: helpers.withMessage('This field is required', required),
-    minLength: helpers.withMessage('Full Name must be at least 3 characters', minLength(3)),
-    $autoDirty: true
+const v$ = useVuelidate(
+  {
+    fullName: {
+      required: helpers.withMessage('This field is required', required),
+      minLength: helpers.withMessage('Full Name must be at least 3 characters', minLength(3)),
+      $autoDirty: true
+    },
+    email: {
+      required: helpers.withMessage('This field is required', required),
+      email: helpers.withMessage('Email format is invalid', email),
+      minLength: helpers.withMessage('Email must be at least 6 characters', minLength(6)),
+      $autoDirty: true
+    },
+    countriesVisited: {
+      required: helpers.withMessage('This field is required', required),
+      numeric: helpers.withMessage('This field must be numeric', numeric),
+      maxValue: helpers.withMessage(
+        'There are only 195 countries in the world. Did you travel to Mars?',
+        maxValue(195)
+      ),
+      $autoDirty: true
+    },
+    countriesThisYear: {
+      required: helpers.withMessage('This field is required', required),
+      numeric: helpers.withMessage('This field must be numeric', numeric),
+      maxValue: helpers.withMessage(
+        'There are only 195 countries in the world. Did you travel to Mars?',
+        maxValue(195)
+      ),
+      $autoDirty: true
+    },
+    favoriteCountry: {
+      required: helpers.withMessage('This field is required', required),
+      $autoDirty: true
+    },
+    favoriteFood: {
+      required: helpers.withMessage('This field is required', required)
+    },
+    password: {
+      required: helpers.withMessage('This field is required', required),
+      minLength: helpers.withMessage('Email must be at least 8 characters', minLength(8)),
+      $autoDirty: true
+    },
+    randomContent: {
+      minLength: helpers.withMessage('This field must be at least 3 characters', minLength(10)),
+      $autoDirty: true
+    }
   },
-  email: {
-    required: helpers.withMessage('This field is required', required),
-    email: helpers.withMessage('Email format is invalid', email),
-    minLength: helpers.withMessage('Email must be at least 6 characters', minLength(6)),
-    $autoDirty: true
-  },
-  countriesVisited: {
-    required: helpers.withMessage('This field is required', required),
-    numeric: helpers.withMessage('This field must be numeric', numeric),
-    maxValue: helpers.withMessage('There are only 195 countries in the world. Did you travel to Mars?', maxValue(195)),
-    $autoDirty: true
-  },
-  countriesThisYear: {
-    required: helpers.withMessage('This field is required', required),
-    numeric: helpers.withMessage('This field must be numeric', numeric),
-    maxValue: helpers.withMessage('There are only 195 countries in the world. Did you travel to Mars?', maxValue(195)),
-    $autoDirty: true
-  },
-  favoriteCountry: {
-    required: helpers.withMessage('This field is required', required),
-    $autoDirty: true
-  },
-  favoriteFood: {
-    required: helpers.withMessage('This field is required', required)
-  },
-  password: {
-    required: helpers.withMessage('This field is required', required),
-    minLength: helpers.withMessage('Email must be at least 8 characters', minLength(8)),
-    $autoDirty: true
-  },
-  randomContent: {
-    minLength: helpers.withMessage('This field must be at least 3 characters', minLength(10)),
-    $autoDirty: true
-  }
-}, formState)
+  formState
+)
 
 const updateCheckboxValue = (value: string) => {
   if (formState.andeanCountries.has(value)) {
@@ -102,16 +108,13 @@ const updateCheckboxValue = (value: string) => {
 const onSubmit = () => {
   v$.value.$touch()
 }
-
 </script>
 
 <template>
-  <h1 class="text-4xl font-bold text-zinc-950 dark:text-zinc-50 mb-4 text-center">
-    About
-  </h1>
+  <h1 class="text-4xl font-bold text-zinc-950 dark:text-zinc-50 mb-4 text-center">About</h1>
   <p class="text-base text-zinc-950 dark:text-zinc-50 max-w-md w-full mx-auto mb-6">
-    This page is just for testing and learning purposes about working with forms validations
-    in VueJS, it's me just playing around 🤷
+    This page is just for testing and learning purposes about working with forms validations in
+    VueJS, it's me just playing around 🤷
   </p>
   <div class="flex flex-col md:flex-row gap-4 justify-center items-start" v-if="!!formState">
     <form class="flex flex-col w-full max-w-md gap-5 mx-auto" @submit.prevent="onSubmit">
@@ -196,7 +199,7 @@ const onSubmit = () => {
           nameId="favoriteFood"
           type="radio"
           :options="CUISINE_COUNTRIES"
-          @updateValue="value => formState.favoriteFood = value"
+          @updateValue="(value) => (formState.favoriteFood = value)"
           isRequired
         >
           <FormError :errors="v$.favoriteFood.$errors" />
@@ -237,26 +240,26 @@ const onSubmit = () => {
       </div>
       <button
         type="submit"
-        class="
-          text-base text-zinc-50 py-2 px-3 rounded-sm transition-colors mt-6
-          bg-violet-800 font-bold hover:text-zinc-50 dark:bg-emerald-700
-          hover:bg-violet-600 dark:hover:bg-emerald-600
-        "
+        class="text-base text-zinc-50 py-2 px-3 rounded-sm transition-colors mt-6 bg-violet-800 font-bold hover:text-zinc-50 dark:bg-emerald-700 hover:bg-violet-600 dark:hover:bg-emerald-600"
         @click="onSubmit"
       >
         Let's Go
       </button>
     </form>
-  
+
     <div class="flex flex-col w-full max-w-md sticky top-24" v-if="!v$.$invalid">
       <h6 class="text-lg font-bold text-zinc-950 dark:text-zinc-50 mb-2">Form is Valid 🥳</h6>
       <pre
         data-testid="form-result"
-        class="
-          w-full border-2 border-zinc-300 bg-zinc-100 p-3 dark:bg-zinc-800
-          dark:border-zinc-400 border-dashed text-zinc-950 dark:text-zinc-50
-        "
-      >{{ JSON.stringify({ ...formState, andeanCountries: Array.from(formState.andeanCountries) }, undefined, 2) }}</pre>
+        class="w-full border-2 border-zinc-300 bg-zinc-100 p-3 dark:bg-zinc-800 dark:border-zinc-400 border-dashed text-zinc-950 dark:text-zinc-50"
+        >{{
+          JSON.stringify(
+            { ...formState, andeanCountries: Array.from(formState.andeanCountries) },
+            undefined,
+            2
+          )
+        }}</pre
+      >
     </div>
   </div>
 </template>

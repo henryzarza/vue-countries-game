@@ -11,9 +11,9 @@ describe('About View', () => {
   beforeEach(() => {
     const mockClient = createMockClient()
 
-    mockClient.setRequestHandler(
-      SA_COUNTRIES_QUERY,
-      () => Promise.resolve({ data: { continents: [{ countries: MOCK_COUNTRIES }] }}))
+    mockClient.setRequestHandler(SA_COUNTRIES_QUERY, () =>
+      Promise.resolve({ data: { continents: [{ countries: MOCK_COUNTRIES }] } })
+    )
 
     provideApolloClient(mockClient)
   })
@@ -25,13 +25,13 @@ describe('About View', () => {
   it('request is being made and the selects are hidden', async () => {
     const wrapper = mount(AboutView)
     const submitButton = wrapper.find('button[type="submit"]')
-    
+
     expect(wrapper.get('h1').text()).toBe('About')
     expect(submitButton.exists()).toBe(true)
     expect(wrapper.findAll('select')).toHaveLength(0)
-    
+
     await flushPromises()
-    
+
     expect(wrapper.findAll('select')).toHaveLength(2)
   })
 
@@ -39,10 +39,10 @@ describe('About View', () => {
     const wrapper = mount(AboutView)
     const inputs = wrapper.findAll('input')
     const textarea = wrapper.find('textarea')
-    
+
     expect(wrapper.get('h1').text()).toBe('About')
     expect(inputs).toHaveLength(9)
-    
+
     await inputs[0].setValue('Te')
     await inputs[1].setValue('example')
     await textarea.setValue('T')

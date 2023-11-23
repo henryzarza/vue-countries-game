@@ -13,17 +13,17 @@ import { MOCK_GAME_COUNTRIES } from '@/mocks/data'
 
 describe('Flipping Components', () => {
   describe('FlipCard', () => {
-    const MOCK_COUNTRY = { code: "AR", emoji: "🇦🇷", name: "Argentina" }
+    const MOCK_COUNTRY = { code: 'AR', emoji: '🇦🇷', name: 'Argentina' }
 
     it('when the card is picked the data is being shown properly', () => {
       const wrapper = mount(FlipCard, { props: { data: MOCK_COUNTRY, index: 0, isPicked: true } })
-      
+
       expect(wrapper.attributes('class')).toContain('picked pointer-events-none')
       expect(wrapper.get('h6').text()).toBe(MOCK_COUNTRY.emoji)
       expect(wrapper.find('span').text()).toBe(MOCK_COUNTRY.name)
       expect(wrapper.findComponent(IconIdea).exists()).toBe(true)
     })
-  
+
     it('is emitting the correct info when the card is clicked', async () => {
       const wrapper = mount(FlipCard, { props: { data: MOCK_COUNTRY, index: 3 } })
 
@@ -34,10 +34,10 @@ describe('Flipping Components', () => {
       // @ts-ignore reason: I'm checking on the line above that is defined
       expect(emitted[0]).toStrictEqual([3])
     })
-  
+
     it('when the card is not picked or guessed the data is being hidden', () => {
       const wrapper = mount(FlipCard, { props: { data: MOCK_COUNTRY, index: 0 } })
-      
+
       expect(wrapper.attributes('class')).not.toContain('picked pointer-events-none')
       expect(wrapper.attributes('class')).not.toContain('guessed pointer-events-none')
     })
@@ -49,7 +49,7 @@ describe('Flipping Components', () => {
       [false, 'You lost']
     ])('when hasWon prop is %s - it shows %s message', (hasWon, expectedResult) => {
       const wrapper = mount(GameResult, { props: { isVisible: true, hasWon } })
-      
+
       expect(wrapper.get('section').attributes('class')).toContain('translate-y-0')
       expect(wrapper.get('h6').text()).toBe(expectedResult)
     })
@@ -59,14 +59,14 @@ describe('Flipping Components', () => {
 
       const button = wrapper.get('button')
       expect(button.text()).toBe('Reset Game')
-       
+
       await button.trigger('click')
       expect(wrapper.emitted('resetGame')).toHaveLength(1)
     })
-  
+
     it('when isVisible prop is false the component should be hidden', () => {
       const wrapper = mount(GameResult, { props: { isVisible: false, hasWon: false } })
-      
+
       expect(wrapper.get('section').attributes('class')).toContain('translate-y-full')
     })
   })
@@ -76,9 +76,9 @@ describe('Flipping View', () => {
   beforeEach(() => {
     const mockClient = createMockClient()
 
-    mockClient.setRequestHandler(
-      GAME_COUNTRIES_QUERY,
-      () => Promise.resolve({ data: { countries: MOCK_GAME_COUNTRIES } }))
+    mockClient.setRequestHandler(GAME_COUNTRIES_QUERY, () =>
+      Promise.resolve({ data: { countries: MOCK_GAME_COUNTRIES } })
+    )
 
     provideApolloClient(mockClient)
   })
@@ -124,7 +124,7 @@ describe('Flipping View', () => {
     await cards[0].trigger('click')
     expect(cards[0].emitted('selectCountry')).toHaveLength(1)
     expect(cards[0].attributes('class')).toContain('picked pointer-events-none')
-    
+
     await cards[0].trigger('click')
     expect(cards[0].emitted('selectCountry')).toHaveLength(1)
     expect(wrapper.find('h6').text()).toBe(`Movements: ${MAX_MOVEMENTS}`)
@@ -135,7 +135,9 @@ describe('Flipping View', () => {
     await flushPromises()
 
     expect(wrapper.find('h6').text()).toBe(`Movements: ${MAX_MOVEMENTS}`)
-    const sameCards = wrapper.findAllComponents(FlipCard).filter(el => el.get('h6').text() === '🇦🇷')
+    const sameCards = wrapper
+      .findAllComponents(FlipCard)
+      .filter((el) => el.get('h6').text() === '🇦🇷')
 
     expect(sameCards).toHaveLength(2)
 

@@ -1,32 +1,31 @@
 interface Country {
-  code: string;
-  emoji: string;
-  name: string;
-  capital: string;
+  code: string
+  emoji: string
+  name: string
+  capital: string
 }
 
 interface CountryDetail {
-  emoji: string;
-  name: string;
-  capital: string;
-  awsRegion: string;
-  currencies: string[];
-  phone: string;
-  states: {
-    code: string;
-    name: string;
-  }[] | null;
+  emoji: string
+  name: string
+  capital: string
+  awsRegion: string
+  currencies: string[]
+  phone: string
+  states:
+    | {
+        code: string
+        name: string
+      }[]
+    | null
   continent: {
-    name: string;
+    name: string
   }
   languages: {
-    code: string;
-    name: string;
-    native: string;
+    code: string
+    name: string
+    native: string
   }[]
 }
 
-export {
-  type Country,
-  type CountryDetail,
-}
+export { type Country, type CountryDetail }

@@ -7,7 +7,9 @@ export function randomIntFromInterval(min: number, max: number) {
 
 // Fisher--Yates Algorithm -- https://bost.ocks.org/mike/shuffle/
 export function shuffleArray<T>(array: Array<T>) {
-  let counter = array.length, temp, index
+  let counter = array.length,
+    temp,
+    index
   const newArray = [...array]
 
   while (counter > 0) {
@@ -21,17 +23,19 @@ export function shuffleArray<T>(array: Array<T>) {
   return newArray
 }
 
-/** 
+/**
  * @description method to create array for flipping game screen
  * */
 export const createArrayToPlay = (countries: Country[]) => {
   const { length } = countries
   if (length > 0) {
     const randomIndex = randomIntFromInterval(0, countries.length)
-    const startIndex = (randomIndex + COUNTRIES_TO_PLAY > length) ? randomIndex - COUNTRIES_TO_PLAY : randomIndex
-    const endIndex = (randomIndex + COUNTRIES_TO_PLAY > length) ? length : randomIndex + COUNTRIES_TO_PLAY
+    const startIndex =
+      randomIndex + COUNTRIES_TO_PLAY > length ? randomIndex - COUNTRIES_TO_PLAY : randomIndex
+    const endIndex =
+      randomIndex + COUNTRIES_TO_PLAY > length ? length : randomIndex + COUNTRIES_TO_PLAY
     const arrayToPlay = countries.slice(startIndex, endIndex)
-  
+
     return shuffleArray<Country>([...arrayToPlay, ...arrayToPlay])
   }
 

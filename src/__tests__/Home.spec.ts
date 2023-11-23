@@ -14,15 +14,15 @@ describe('Home Components and View', () => {
   beforeEach(() => {
     const mockClient = createMockClient()
 
-    mockClient.setRequestHandler(COUNTRIES_QUERY, () => Promise.resolve({ data: { countries: MOCK_COUNTRIES }}))
+    mockClient.setRequestHandler(COUNTRIES_QUERY, () =>
+      Promise.resolve({ data: { countries: MOCK_COUNTRIES } })
+    )
 
     mockClient.setRequestHandler(COUNTRY_DETAIL_QUERY, ({ code }) => {
-      if (code === 'EMPTY')
-        return Promise.resolve({ data: { country: null }})
-      else if (code === 'ERROR')
-        return Promise.reject(new Error('GraphQL Network Error'))
+      if (code === 'EMPTY') return Promise.resolve({ data: { country: null } })
+      else if (code === 'ERROR') return Promise.reject(new Error('GraphQL Network Error'))
 
-      return Promise.resolve({ data: { country: MOCK_COUNTRY }})
+      return Promise.resolve({ data: { country: MOCK_COUNTRY } })
     })
 
     provideApolloClient(mockClient)
@@ -37,9 +37,9 @@ describe('Home Components and View', () => {
       disconnect: vi.fn(),
       observe: mockObserve,
       takeRecords: vi.fn(),
-      unobserve: vi.fn(),
+      unobserve: vi.fn()
     }))
-    
+
     vi.stubGlobal('IntersectionObserver', IntersectionObserverMock)
   })
 
@@ -49,7 +49,9 @@ describe('Home Components and View', () => {
 
     expect(countriesList).toHaveLength(MOCK_COUNTRIES.length)
     // check country info detail
-    expect(countriesList[0].find('span[aria-label$="flag emoji"]').text()).toBe(MOCK_COUNTRIES[0].emoji)
+    expect(countriesList[0].find('span[aria-label$="flag emoji"]').text()).toBe(
+      MOCK_COUNTRIES[0].emoji
+    )
     expect(countriesList[0].find('h5').text()).toBe(MOCK_COUNTRIES[0].name)
     expect(countriesList[0].find('p').text()).toBe(`Capital: ${MOCK_COUNTRIES[0].capital}`)
     expect(countriesList[0].find('h6').text()).toBe(`Code ${MOCK_COUNTRIES[0].code}`)
@@ -74,7 +76,7 @@ describe('Home Components and View', () => {
   })
 
   it('CountryDetail is showing the data properly', async () => {
-    const wrapper = mount(CountryDetail, { props: { code: "AR" }})
+    const wrapper = mount(CountryDetail, { props: { code: 'AR' } })
     const modalContainer = wrapper.find('section[aria-label="Country detail"]')
 
     expect(modalContainer.exists()).toBe(true)
@@ -87,14 +89,16 @@ describe('Home Components and View', () => {
     expect(modalContainer.findAll('h6')[0].text()).toBe('Capital: Buenos Aires')
     expect(modalContainer.find('span[data-testid="country-currencies"]').text()).toBe('ARS')
     expect(modalContainer.find('span[data-testid="country-indicator"]').text()).toBe('+54')
-    expect(modalContainer.find('span[data-testid="country-continent"]').text()).toBe('South America')
+    expect(modalContainer.find('span[data-testid="country-continent"]').text()).toBe(
+      'South America'
+    )
     expect(modalContainer.findAll('span[data-testid="country-languages"]')).toHaveLength(2)
     expect(modalContainer.find('span[data-testid="country-aws"]').text()).toBe('sa-east-1')
     expect(modalContainer.findAll('ul[aria-label="States list"] > li')).toHaveLength(24)
   })
 
   it('CountryDetail is showing the empty state', async () => {
-    const wrapper = mount(CountryDetail, { props: { code: "EMPTY" }})
+    const wrapper = mount(CountryDetail, { props: { code: 'EMPTY' } })
     const modalContainer = wrapper.find('section[aria-label="Country detail"]')
 
     expect(modalContainer.exists()).toBe(true)
@@ -106,7 +110,7 @@ describe('Home Components and View', () => {
   })
 
   it('CountryDetail is showing the error state', async () => {
-    const wrapper = mount(CountryDetail, { props: { code: "ERROR" }})
+    const wrapper = mount(CountryDetail, { props: { code: 'ERROR' } })
     const modalContainer = wrapper.find('section[aria-label="Country detail"]')
 
     expect(modalContainer.exists()).toBe(true)

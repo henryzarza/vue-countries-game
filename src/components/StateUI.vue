@@ -2,9 +2,9 @@
 import BaseLoader from './BaseLoader.vue'
 
 const { type, message } = defineProps<{
-  type: 'image' | 'loading',
+  type: 'image' | 'loading'
   message: string
-  }>()
+}>()
 </script>
 
 <template>
@@ -14,11 +14,11 @@ const { type, message } = defineProps<{
         class="w-96 max-w-full"
         src="assets/empty.svg"
         alt="Man with a green t-shirt opening a purple folder"
-      >
+      />
       <h3 class="text-xl text-zinc-950 dark:text-zinc-50">
-        {{message}}
+        {{ message }}
       </h3>
     </template>
-    <BaseLoader v-else :message="message"/>
+    <BaseLoader v-else :message="message" />
   </div>
 </template>

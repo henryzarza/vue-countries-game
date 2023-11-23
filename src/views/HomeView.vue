@@ -25,13 +25,10 @@ const selectCountry = (code?: string) => {
       <input class="radio hidden" type="radio" v-model="view" value="map" id="map" />
       <label
         for="map"
-        class="
-          py-2 px-4 flex items-center bg-zinc-200 cursor-pointer hover:bg-violet-200 transition-all
-          border-solid border-r-[1px] border-r-zinc-950 border-zinc-950
-        "
+        class="py-2 px-4 flex items-center bg-zinc-200 cursor-pointer hover:bg-violet-200 transition-all border-solid border-r-[1px] border-r-zinc-950 border-zinc-950"
         aria-label="Show on map view"
       >
-        <img class="w-8" src="assets/continents.png" alt="Continents icon">
+        <img class="w-8" src="assets/continents.png" alt="Continents icon" />
       </label>
       <input class="radio hidden" type="radio" v-model="view" value="card" id="card" />
       <label
@@ -39,7 +36,7 @@ const selectCountry = (code?: string) => {
         class="py-2 px-4 flex items-center bg-zinc-200 cursor-pointer hover:bg-violet-200 transition-all"
         aria-label="Show on cards list"
       >
-        <img class="w-6" src="assets/checklist.png" alt="Checklist icon">
+        <img class="w-6" src="assets/checklist.png" alt="Checklist icon" />
       </label>
     </div>
   </header>
@@ -53,35 +50,24 @@ const selectCountry = (code?: string) => {
   <!-- When there are data -->
   <template v-else-if="result?.countries && result.countries.length > 0">
     <!-- Map view -->
-    <MapView
-      :hidden="view !== 'map'"
-      @selectCountry="selectCountry"
-    />
+    <MapView :hidden="view !== 'map'" @selectCountry="selectCountry" />
 
     <!-- List view -->
-    <ListView
-      v-if="view === 'card'"
-      :countries="result.countries"
-      @selectCountry="selectCountry"
-    />
+    <ListView v-if="view === 'card'" :countries="result.countries" @selectCountry="selectCountry" />
 
     <!-- Modal to show the country detail -->
-    <CountryDetail
-      :code="selectedCountryCode"
-      @closeModal="selectCountry"
-    />
+    <CountryDetail :code="selectedCountryCode" @closeModal="selectCountry" />
   </template>
 
   <!-- When result is empty -->
   <StateUI v-else type="image" message="Umm... There are no data to show" />
-
 </template>
 
 <style scoped>
 .radio:checked + label {
   box-shadow:
-    inset 2px 2px 3px rgba(0 0 0 / .15),
-    inset -3px -3px 3px rgba(0 0 0 / .15);
+    inset 2px 2px 3px rgba(0 0 0 / 0.15),
+    inset -3px -3px 3px rgba(0 0 0 / 0.15);
   background-color: rgb(221 214 254 / var(--tw-bg-opacity));
 }
 </style>
