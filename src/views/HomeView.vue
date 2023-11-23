@@ -8,6 +8,8 @@ import MapView from '@/components/Home/MapView.vue'
 import StateUI from '@/components/StateUI.vue'
 import CountryDetail from '@/components/Home/CountryDetail.vue'
 import { COUNTRIES_QUERY } from '@/constants/queries'
+import continentsImg from '@/assets/continents.png'
+import checklistImg from '@/assets/checklist.png'
 
 const view = ref('map')
 const selectedCountryCode = ref()
@@ -28,7 +30,7 @@ const selectCountry = (code?: string) => {
         class="py-2 px-4 flex items-center bg-zinc-200 cursor-pointer hover:bg-violet-200 transition-all border-solid border-r-[1px] border-r-zinc-950 border-zinc-950"
         aria-label="Show on map view"
       >
-        <img class="w-8" src="assets/continents.png" alt="Continents icon" />
+        <img class="w-8" :src="continentsImg" alt="Continents icon" />
       </label>
       <input class="radio hidden" type="radio" v-model="view" value="card" id="card" />
       <label
@@ -36,7 +38,7 @@ const selectCountry = (code?: string) => {
         class="py-2 px-4 flex items-center bg-zinc-200 cursor-pointer hover:bg-violet-200 transition-all"
         aria-label="Show on cards list"
       >
-        <img class="w-6" src="assets/checklist.png" alt="Checklist icon" />
+        <img class="w-6" :src="checklistImg" alt="Checklist icon" />
       </label>
     </div>
   </header>

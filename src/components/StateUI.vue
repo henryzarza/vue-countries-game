@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BaseLoader from './BaseLoader.vue'
+import emptySrc from '@/assets/empty.svg'
 
 const { type, message } = defineProps<{
   type: 'image' | 'loading'
@@ -12,7 +13,7 @@ const { type, message } = defineProps<{
     <template v-if="type === 'image'">
       <img
         class="w-96 max-w-full"
-        src="assets/empty.svg"
+        :src="emptySrc"
         alt="Man with a green t-shirt opening a purple folder"
       />
       <h3 class="text-xl text-zinc-950 dark:text-zinc-50">
