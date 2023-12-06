@@ -21,5 +21,6 @@ const { type, message } = defineProps<{
       </h3>
     </template>
     <BaseLoader v-else :message="message" />
+    <slot />
   </div>
 </template>
