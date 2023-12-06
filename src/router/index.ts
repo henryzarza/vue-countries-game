@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import NotFound from '../views/NotFound.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
@@ -23,7 +24,8 @@ const router = createRouter({
       path: '/flipping-game',
       name: 'flipping-game',
       component: () => import('../views/FlippingGameView.vue')
-    }
+    },
+    { path: '/:pathMatch(.*)', component: NotFound }
   ]
 })
 
